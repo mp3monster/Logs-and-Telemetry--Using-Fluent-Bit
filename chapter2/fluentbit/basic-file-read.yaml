@@ -1,0 +1,14 @@
+service:
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: tail
+      path: ./Chapter2/basic-file.txt
+      read_from_head: true
+      exit_on_eof: true
+      tag: basic-file
+
+  outputs:
+    - name: stdout
+      match: "*"

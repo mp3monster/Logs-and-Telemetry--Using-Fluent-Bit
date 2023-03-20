@@ -11,6 +11,17 @@ pipeline:
       Dummy: '{ "hello": "my world" }'
       tag: dummy1
 
+    #inputs:
+    - name: dummy
+      Dummy: '{ "more": "stuff" }'
+      tag: dummy2
+
   outputs:
     - name: stdout
       match: "*"
+
+    #outputs:
+    - name: stdout
+      match: "*"
+      Format: json
+      json_date_format: iso8601

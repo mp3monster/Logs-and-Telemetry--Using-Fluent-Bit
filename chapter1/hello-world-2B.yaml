@@ -14,3 +14,15 @@ pipeline:
   outputs:
     - name: stdout
       match: "*"
+
+pipeline:
+    inputs:
+    - name: dummy
+      Dummy: '{ "more": "stuff" }'
+      tag: dummy2  
+
+    outputs:
+    - name: stdout
+      match: "*"
+      Format: json
+      json_date_format: iso8601      
