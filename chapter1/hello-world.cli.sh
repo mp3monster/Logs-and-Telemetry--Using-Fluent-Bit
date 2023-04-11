@@ -1,1 +1,0 @@
-fluent-bit -q -v -i dummy -t dummy1 -p dummy="{\"hello\":\"my world\"}" -o stdout -m '*'
