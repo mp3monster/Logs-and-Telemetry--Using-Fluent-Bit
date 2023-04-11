@@ -1,0 +1,15 @@
+service:
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: tail
+      path: ./chapter3/basic-file.txt
+      DB: ./chapter3/tracking-file-read.db
+      DB.locking: false
+      read_from_head: true
+      tag: tracking-file-read
+
+  outputs:
+    - name: stdout
+      match: "*"
