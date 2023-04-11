@@ -1,0 +1,16 @@
+env:
+  flush_interval: 1
+
+service:
+  flush_interval: ${flush_interval}
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      Dummy: '{ "hello": "my world" }'
+      tag: dummy1
+
+  outputs:
+    - name: stdt
+      match: "*"

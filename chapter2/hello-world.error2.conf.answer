@@ -1,0 +1,16 @@
+[service]
+  flush 1
+
+[input]
+  name dummy
+  dummy {"hello":"my world"}
+  tag  dummy1
+#  ta dummy1
+# you may have observed that as Fluentbit doesn't check every aspect
+# it failed to spot that ta is not a valid attribute and it should be tag
+
+[output]
+  match *
+  name stdout
+#  name stdt
+# this plugin name is not recognized so will cause an error

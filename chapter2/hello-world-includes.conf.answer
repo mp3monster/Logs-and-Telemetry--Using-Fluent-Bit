@@ -1,0 +1,3 @@
+@include hello-world-input.conf
+@include stub.conf
+@include hello-world-output.conf
