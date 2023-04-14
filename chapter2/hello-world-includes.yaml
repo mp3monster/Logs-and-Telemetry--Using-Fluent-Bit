@@ -1,0 +1,4 @@
+includes:
+  - hello-world-input.yaml
+  - hello-world-output.yaml
+  - subdir/hello-world-2-pipeline.yaml

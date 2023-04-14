@@ -1,0 +1,4 @@
+pipeline:
+  outputs:
+    - name: stdout
+      match: "*"
