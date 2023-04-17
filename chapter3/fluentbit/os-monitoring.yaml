@@ -1,0 +1,37 @@
+env:
+  flush_interval: 1
+
+service:
+  flush_interval: ${flush_interval}
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: disk
+      interval_sec: 5
+      tag: book_vm_disk
+      # https://docs.fluentbit.io/manual/pipeline/inputs/disk-io-metrics
+      # on Linux we can get the device details via lsblk
+
+    - name: cpu
+      interval_sec: 5
+      tag: book_vm_cpu
+
+    - name: mem
+      interval_sec: 5
+      PID: ${myPID}
+      tag: book_vm_memory
+      # https://docs.fluentbit.io/manual/pipeline/inputs/memory-metrics
+
+    - name: netif
+      interface: eth0
+      interval_sec: 5
+      verbose: true
+      test_at_init: true
+      tag: book_vm_network
+      # https://docs.fluentbit.io/manual/pipeline/inputs/network-io-metrics
+      # can get details with ifconfig
+
+  outputs:
+    - name: stdout
+      match: "*"
