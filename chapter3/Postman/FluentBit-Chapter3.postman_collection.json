@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "ea9fb197-854f-4d94-8690-8ae816e1cba6",
+		"name": "Fluent Bit Chapter 3",
+		"description": "This collection provides a Postman approach to triggering our examples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4322612"
+	},
+	"item": [
+		{
+			"name": "HTTP Call",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hello\": \"Fluent\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9881",
+					"host": [
+						"localhost"
+					],
+					"port": "9881"
+				},
+				"description": "Postman configuration for the HTTP endpoint use case"
+			},
+			"response": []
+		},
+		{
+			"name": "HTTPS Call",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hello\": \"Fluent\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9881",
+					"host": [
+						"localhost"
+					],
+					"port": "9881"
+				},
+				"description": "Postman configuration for the HTTP endpoint use case"
+			},
+			"response": []
+		},
+		{
+			"name": "OpenTelemetry V1 Logs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"resourceLogs\":[{\"resource\":{\"attributes\":[{\"key\":\"resource-attr\",\"value\":{\"stringValue\":\"resource-attr-val-1\"}}]},\"scopeLogs\":[{\"scope\":{},\"logRecords\":[{\"timeUnixNano\":\"1581452773000000789\",\"severityNumber\":9,\"severityText\":\"Info\",\"name\":\"logA\",\"body\":{\"stringValue\":\"This is a log message\"},\"attributes\":[{\"key\":\"app\",\"value\":{\"stringValue\":\"server\"}},{\"key\":\"instance_num\",\"value\":{\"intValue\":\"1\"}}],\"droppedAttributesCount\":1,\"traceId\":\"08040201000000000000000000000000\",\"spanId\":\"0102040800000000\"},{\"timeUnixNano\":\"1581452773000000789\",\"severityNumber\":9,\"severityText\":\"Info\",\"name\":\"logB\",\"body\":{\"stringValue\":\"something happened\"},\"attributes\":[{\"key\":\"customer\",\"value\":{\"stringValue\":\"acme\"}},{\"key\":\"env\",\"value\":{\"stringValue\":\"dev\"}}],\"droppedAttributesCount\":1,\"traceId\":\"\",\"spanId\":\"\"}]}]}]}\r\n"
+				},
+				"url": {
+					"raw": "localhost:4317/v1/logs",
+					"host": [
+						"localhost"
+					],
+					"port": "4317",
+					"path": [
+						"v1",
+						"logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenTelemetry V1 Trace",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"resourceSpans\": [\r\n   {\r\n     \"resource\": {\r\n       \"attributes\": [\r\n         {\r\n           \"key\": \"service.name\",\r\n           \"value\": {\r\n             \"stringValue\": \"FluentBit-OTEL-Trace\"\r\n           }\r\n         }\r\n       ]\r\n     },\r\n     \"scopeSpans\": [\r\n       {\r\n         \"scope\": {\r\n           \"name\": \"manual-test\"\r\n         },\r\n         \"spans\": [\r\n           {\r\n             \"traceId\": \"71699b6fe85982c7c8995ea3d9c95df2\",\r\n             \"spanId\": \"3c191d03fa8be065\",\r\n             \"name\": \"spanitron\",\r\n             \"kind\": 2,\r\n             \"droppedAttributesCount\": 0,\r\n             \"events\": [],\r\n             \"droppedEventsCount\": 0,\r\n             \"status\": {\r\n               \"code\": 1\r\n             }\r\n           }\r\n         ]\r\n       }\r\n     ]\r\n   }\r\n ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:4317/v1/traces",
+					"host": [
+						"localhost"
+					],
+					"port": "4317",
+					"path": [
+						"v1",
+						"traces"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
