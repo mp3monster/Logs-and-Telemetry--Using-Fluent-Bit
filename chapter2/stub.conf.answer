@@ -1,4 +1,4 @@
-[input]
+[INPUT]
   name dummy
   dummy {"hello":"stubby"}
   tag stubby

@@ -1,7 +1,7 @@
-[service]
+[SERVICE]
   flush 1
 
-[input]
+[INPUT]
   name dummy
   dummy {"hello":"my world"}
   tag  dummy1
@@ -9,7 +9,7 @@
 # you may have observed that as Fluentbit doesn't check every aspect
 # it failed to spot that ta is not a valid attribute and it should be tag
 
-[output]
+[OUTPUT]
   match *
   name stdout
 #  name stdt
