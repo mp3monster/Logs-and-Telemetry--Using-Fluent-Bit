@@ -1,0 +1,9 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/simple"
+    },
+    "response": {
+        "status": 200       
+    }
+}
