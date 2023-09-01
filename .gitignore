@@ -21,3 +21,40 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+chapter2/basic-file.txt
+
+*.db
+
+tracking-file-read.db-shm
+
+*.db-wal
+
+*.code-workspace
+
+chapter2/currently doesnt work/
+
+LogSimulator.groovy
+
+chapter3/ps1.txt
+
+TestData/small-source.txt
+
+golang
+chapter3/__pycache__/
+
+captured.txt
+
+.vscode/
+
+chapter3/locust-otel.py
+
+chapter3/call-otel-log.bat
+
+chapter4/fluentbit-metrics.txt
+
+chapter4/fluentbit/std-output-answer.conf.ignore
+
+chapter4/wiremock/mapping-authed-POST.redundant
+
+*.hide
