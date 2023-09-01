@@ -1,0 +1,13 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/my/traces"
+    },
+    "response": {
+        "status": 200,
+        "body": "WireMock confirming a trace",
+        "headers": {
+            "Content-Type": "text/plain"
+        }          
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/my/logs"
+    },
+    "response": {
+        "status": 200,
+        "body": "WireMock confirming a Logs call",
+        "headers": {
+            "Content-Type": "text/plain"
+        }        
+    }
+}
