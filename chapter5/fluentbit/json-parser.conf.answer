@@ -1,0 +1,5 @@
+[PARSER]
+    name myNginxJSONParser
+    format json
+    time_key time
+    time_format %d/%m/%Y:%H:%M:%S %z
