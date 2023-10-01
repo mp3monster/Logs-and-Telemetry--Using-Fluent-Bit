@@ -1,0 +1,4 @@
+{"time": "1", "coded-msg" : "\\t hello", "coding-type" : "UTF-8"}
+{"time": "2", "coded-msg" : "{\"key\":\"value\"}", "coding-type" : "JSON"}
+{"time": "3", "coded-msg" : "\\u0077\\u0000\\u004C\\u0069\\u006E\\u0065", "coding-type" : "escaped \tUnicode"}
+{"time": "4", "coded-msg" : "{\"key\": {\"innerKey\":\"\\u0077\"} }", "coding-type" : "JSON"}
