@@ -1,0 +1,54 @@
+service:
+  flush: 1
+  daemon: off
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy1
+      dummy: '{   "time": "12/May/2023:08:05:52 +0000",   "remote_ip": "10.4.72.163",   "remoteuser": "-",   "request": {     "verb": "GET",     "path": " /downloads/product_2",     "protocol": "HTTP",     "version": "1.1"   },   "response": 304}'
+
+    - name: dummy
+      tag: dummy2
+      dummy: '{   "time": "12/June/2023:08:05:52 +0000",   "remote_ip": "10.4.72.163",   "remote_user": "-",   "request": {     "verb": "GET",     "path": " /downloads/product_2",     "protocol": "HTTP",     "version": "1.1"   },   "response": 304, "another_root_element" : "horrah", "why" : ["just"," so", " the counter"," varies"]}'
+
+  filters:
+    - name: stdout
+      match: *
+
+    - name: lua
+      match: "*"
+      call: cb_displayDataAndTypes
+      time_as_table: false
+      code: |
+        local function printDetails(record, indent)
+          -- this function can be used recursively so we can count nested elements
+          local counter = 0
+          for key, value in pairs(record) do
+            local elementType = type(value)
+            if (elementType == "table") then
+              print(string.format("%s { %s = ", indent, key))
+              printDetails(value, indent .. " ")
+              print("}")
+            else
+              print(string.format("%s %s = %s --> %s", indent, key, tostring(value), elementType))
+            end
+          end
+        end
+
+
+        function cb_displayDataAndTypes(tag, timestamp, record)
+          local code = 0
+          if (type(timestamp) == "table") then
+            print(tag, ":", timestamp['sec'], " . ", timestamp['nsec'])
+          else
+            print(tag, "  ", timestamp)
+          end
+          printDetails(record, "")
+          return code, timestamp, record
+        end
+
+  outputs:
+    - name: null
+      match: "*"
