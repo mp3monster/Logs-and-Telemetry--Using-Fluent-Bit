@@ -1,0 +1,14 @@
+version: "1.0"
+services:
+  logger:
+    volumes:
+      - .:/vol/log
+      - ./SimulatorConfig/:/vol/conf
+      - ./../TestData:/vol/test-data
+    ports:
+      - 8080:8080
+    environment:
+      - run_props=install-check.properties
+    network_mode: bridge
+    build:
+      dockerfile: logger.dockerfile
