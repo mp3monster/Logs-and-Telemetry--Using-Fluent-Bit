@@ -1,4 +1,4 @@
 @include hello-world-input.conf
-@include stub.conf
+@include dynamic.conf
 @include hello-world-output.conf
 # @include stub.conf.answer
