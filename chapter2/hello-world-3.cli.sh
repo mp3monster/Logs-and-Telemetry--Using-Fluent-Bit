@@ -1,1 +1,1 @@
-fluent-bit -q -i dummy -t dummy1 -p dummy="{\"hello\":\"my world\"}"  -i dummy -t dummy2 -p dummy="{\"more\":\"stuff\"}" -o stdout -m '*' -o stdout -m '*' -p Format=json -p json_date_format=iso8601
+fluent-bit -f 5 -q -i dummy -t dummy1 -p dummy="{\"hello\":\"my world\"}"  -i dummy -t dummy2 -p dummy="{\"more\":\"stuff\", \"1\":\"2\"}" -o stdout -m '*' -o stdout -m '*' -p Format=json_lines -p json_date_format=iso8601
