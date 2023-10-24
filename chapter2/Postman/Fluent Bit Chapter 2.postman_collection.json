@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "a81731f8-95d1-4801-8bb1-437e17aae4d0",
+		"name": "Fluent Bit Chapter 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4322612",
+		"_collection_link": "https://www.postman.com/philwilkins/workspace/fluent-bit/collection/4322612-a81731f8-95d1-4801-8bb1-437e17aae4d0?action=share&source=collection_link&creator=4322612"
+	},
+	"item": [
+		{
+			"name": "metrics(v1)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/api/v1/metrics",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"v1",
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "default",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/info",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metrics-prometheus(v1)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/api/v1/metrics/prometheus",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"v1",
+						"metrics",
+						"prometheus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metrics(v2)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/api/v2/metrics",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"v2",
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metrics-prometheus(v2)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/api/v2/metrics/prometheus",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"prometheus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/api/v1/health",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"v1",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "storage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/api/v1/storage",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"v1",
+						"storage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uptime",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/api/v1/uptime",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"v1",
+						"uptime"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "0.0.0.0:2020/api/v2/reload",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "2020",
+					"path": [
+						"api",
+						"v2",
+						"reload"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
