@@ -5,10 +5,13 @@ services:
       - .:/vol/log
       - ./SimulatorConfig/:/vol/conf
       - ./../TestData:/vol/test-data
-    ports:
-      - 8080:8080
+    #    ports:
+    #      - 8080:8080
     environment:
       - run_props=install-check.properties
     network_mode: bridge
     build:
       dockerfile: logger.dockerfile
+      context: .
+      tags:
+        - "mp3monster/flb-logsim"

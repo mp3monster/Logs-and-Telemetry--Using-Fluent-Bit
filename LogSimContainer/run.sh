@@ -34,17 +34,18 @@ fi
 #if something isn't behaving properly - let's see what test data and configs we have
 #ls /vol/conf
 #echo
-#ls /vol/test-data
+ls /vol/test-data
 
 groovy --version
  
- set data_set = ""
-echo ${#data}
+set data_set = ""
+echo $data
 #if test -n $data; then 
 if [ ${#data} -gt 1 ] ; then 
   data_set = "/vol/test-data/" + $data
+  echo $data_set
 fi
 
 cat /vol/conf/$run_props
 
-groovy ./LogSimulator.groovy /vol/conf/$run_props $data_set
+groovy ./LogSimulator.groovy /vol/conf/$run_props /vol/test-data/$data
