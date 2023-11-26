@@ -1,0 +1,15 @@
+[service]
+  flush 1
+  log_level debug
+
+[input]
+  name docker_events
+  tag myDockerEvents
+  key DockerDoes
+  reconnect.retry_limits 2
+  reconnect.retry_interval 5
+
+[output]
+  name stdout
+  match *
+  

@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: side-car-demo
+spec:
+  containers:
+    - name: log-generation
+      image: busybox
+      command: ["/bin/sh", "-c"]
+      args:
+        - >
+          i=0;
+          while true;
+          do
+            # Write two log files along with the date and a counter
+            # every second
+            echo "$i: $(date)" >> /var/log/1.log;
+            echo "$(date) INFO $i" >> /var/log/2.log;
+            i=$((i+1));
+            sleep 1;
+          done
+
+      volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+
+    - name: fluent-bit-side-car
+      image: fluent/fluentd-bit:latest
+      volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: config-volume
+          mountPath: /fluent-bit/etc/fluent-bit.conf
+
+  volumes:
+    - name: varlog
+      emptyDir: {}
+    - name: config-volume
+      configMap:
+        name: fluentbit-config
