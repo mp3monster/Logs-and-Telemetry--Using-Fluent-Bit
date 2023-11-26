@@ -1,0 +1,24 @@
+service:
+  flush_interval: 1
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: opentelemetry
+      listen: 127.0.0.1
+      port: 4318
+
+    # use this for Traces
+    - name: opentelemetry
+      listen: 127.0.0.1
+      raw_traces: true
+      port: 4317
+
+    # use this for metrics
+    - name: opentelemetry
+      listen: 127.0.0.1
+      port: 4316
+
+  outputs:
+    - name: stdout
+      match: "*"
