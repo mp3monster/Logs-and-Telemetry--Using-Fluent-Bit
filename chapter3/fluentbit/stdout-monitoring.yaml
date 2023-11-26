@@ -1,0 +1,13 @@
+service:
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: stdin
+      tag: book_stdout
+
+  outputs:
+    - name: file
+      match: "*"
+      path: .
+      file: captured.txt

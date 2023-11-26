@@ -1,0 +1,16 @@
+service:
+  flush_interval: 1  flush 1
+  log_level: debug
+  parsers_file: ./fluentbit/simple-parser.conf
+
+pipeline:
+  inputs:
+    - name: stdin
+      tag: book_stdout
+      parser: plaintext
+
+  outputs:
+    - name: file
+      match: "*"
+      path: /home/phil/fb-book/
+      file: captured.txt
