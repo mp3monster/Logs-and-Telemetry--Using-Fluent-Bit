@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "8a0a0945-9c99-4447-b394-9a4e390f915e",
+		"name": "Fluent Bit Chapter 5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4322612",
+		"_collection_link": "https://www.postman.com/philwilkins/workspace/fluent-bit/collection/4322612-8a0a0945-9c99-4447-b394-9a4e390f915e?action=share&source=collection_link&creator=4322612"
+	},
+	"item": [
+		{
+			"name": "HTTP Call",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"helloGrp\": [\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"1\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"2\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"3\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"4\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"5\"\n        }\n    ],\n    \"date\": 169023185000\n},\n{\n    \"hello\": \"Fluent\",\n    \"val\": 10,\n    \"date\": 169023145000\n},\n{\n    \"hello\": \"Fluent\",\n    \"val\": 20,\n    \"date\": 169023182000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9881",
+					"host": [
+						"localhost"
+					],
+					"port": "9881"
+				},
+				"description": "Postman configuration for the HTTP endpoint use case"
+			},
+			"response": []
+		},
+		{
+			"name": "HTTP Single Call",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hello\": \"to all my Fluent bit friends - Patrick Stephens, Eduardo Silva, Anarug, Takahiro Yamashita, Leonardo Albertovich, Hiroshi Hatake, Wesley Pettit, Phillip Whelan, David Korczynski, Fujimoto Seiji, Jorge Niedbalski, Yann Soubeyrand, Masoud Koleini, Don Bowman, Zero King, Jeff Luo, Matthew Fala, Thiago Padilha\",\n    \"more\":\"\",\n    \"val\": 20,\n    \"date\": 169023182000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9881",
+					"host": [
+						"localhost"
+					],
+					"port": "9881"
+				},
+				"description": "Postman configuration for the HTTP endpoint use case"
+			},
+			"response": []
+		},
+		{
+			"name": "HTTP Call testing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hello\": \"Fluent\",\n    \"val\": 10,\n    \"my-date\": 1690404469364\n},\n{\n    \"hello\": \"Fluent\",\n    \"val\": 20,\n    \"my-date\": 1690404469364\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9881",
+					"host": [
+						"localhost"
+					],
+					"port": "9881"
+				},
+				"description": "Postman configuration for the HTTP endpoint use case"
+			},
+			"response": []
+		},
+		{
+			"name": "Get FB Metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:2020//api/v1/metrics",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"",
+						"api",
+						"v1",
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get FB Storage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:2020//api/v1/storage",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"",
+						"api",
+						"v1",
+						"storage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get FB Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:2020//api/v1/health",
+					"host": [
+						"localhost"
+					],
+					"port": "2020",
+					"path": [
+						"",
+						"api",
+						"v1",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Prometheus Scraper",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9885/metrics",
+					"host": [
+						"localhost"
+					],
+					"port": "9885",
+					"path": [
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Wiremock mappings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/__admin/mappings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"__admin",
+						"mappings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Wiremock requests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/__admin/requests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"__admin",
+						"requests"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

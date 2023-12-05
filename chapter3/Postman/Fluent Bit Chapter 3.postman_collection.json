@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "ea9fb197-854f-4d94-8690-8ae816e1cba6",
+		"name": "Fluent Bit Chapter 3",
+		"description": "This collection provides a Postman approach to triggering different configuration examples for Chapter 3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4322612",
+		"_collection_link": "https://www.postman.com/philwilkins/workspace/fluent-bit/collection/4322612-ea9fb197-854f-4d94-8690-8ae816e1cba6?action=share&source=collection_link&creator=4322612"
+	},
+	"item": [
+		{
+			"name": "HTTP Call",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hello\": \"Fluent\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9881",
+					"host": [
+						"localhost"
+					],
+					"port": "9881"
+				},
+				"description": "Postman configuration for the HTTP endpoint use case"
+			},
+			"response": []
+		},
+		{
+			"name": "HTTPS Call",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hello\": \"Fluent\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9881",
+					"host": [
+						"localhost"
+					],
+					"port": "9881"
+				},
+				"description": "Postman configuration for the HTTP endpoint use case"
+			},
+			"response": []
+		},
+		{
+			"name": "OpenTelemetry V1 Log",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"resourceLogs\": [\r\n        {\r\n            \"resource\": {\r\n                \"attributes\": [\r\n                    {\r\n                        \"key\": \"resource-attr\",\r\n                        \"value\": {\r\n                            \"stringValue\": \"resource-attr-val-1\"\r\n                        }\r\n                    }\r\n                ]\r\n            },\r\n            \"scopeLogs\": [\r\n                {\r\n                    \"scope\": {},\r\n                    \"logRecords\": [\r\n                        {\r\n                            \"timeUnixNano\": \"1581452773000000789\",\r\n                            \"severityNumber\": 9,\r\n                            \"severityText\": \"Info\",\r\n                            \"name\": \"logA\",\r\n                            \"body\": {\r\n                                \"stringValue\": \"This is a log message\"\r\n                            },\r\n                            \"attributes\": [\r\n                                {\r\n                                    \"key\": \"app\",\r\n                                    \"value\": {\r\n                                        \"stringValue\": \"FluentBit OTel demo\"\r\n                                    }\r\n                                },\r\n                                {\r\n                                    \"key\": \"blah\",\r\n                                    \"value\": {\r\n                                        \"stringValue\": \"Value\"\r\n                                    }\r\n                                },                                \r\n                                {\r\n                                    \"key\": \"instance_id\",\r\n                                    \"value\": {\r\n                                        \"myValue\": \"1\",\r\n                                        \"myServer\": \"server1\"\r\n                                    }\r\n                                }\r\n                            ],\r\n                            \"droppedAttributesCount\": 1,\r\n                            \"traceId\": \"08040201000000000000000000000000\",\r\n                            \"spanId\": \"0102040800000000\"\r\n                        },\r\n                        {\r\n                            \"timeUnixNano\": \"1581452773000000789\",\r\n                            \"severityNumber\": 9,\r\n                            \"severityText\": \"Info\",\r\n                            \"name\": \"logB\",\r\n                            \"body\": {\r\n                                \"stringValue\": \"something happened\"\r\n                            },\r\n                            \"attributes\": [\r\n                                {\r\n                                    \"key\": \"Tag\",\r\n                                    \"value\": {\r\n                                        \"stringValue\": \"log\"\r\n                                    }\r\n                                },\r\n                                {\r\n                                    \"key\": \"env\",\r\n                                    \"value\": {\r\n                                        \"stringValue\": \"dev\"\r\n                                    }\r\n                                }\r\n                            ],\r\n                            \"droppedAttributesCount\": 1,\r\n                            \"traceId\": \"\",\r\n                            \"spanId\": \"\"\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "localhost:4318/v1/logs",
+					"host": [
+						"localhost"
+					],
+					"port": "4318",
+					"path": [
+						"v1",
+						"logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenTelemetry V1 Trace",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"resourceSpans\": [\r\n   {\r\n     \"resource\": {\r\n       \"attributes\": [\r\n         {\r\n           \"key\": \"service.name\",\r\n           \"value\": {\r\n             \"stringValue\": \"FluentBit-OTEL-Trace\"\r\n           }\r\n         }\r\n       ]\r\n     },\r\n     \"scopeSpans\": [\r\n       {\r\n         \"scope\": {\r\n           \"name\": \"manual-test\"\r\n         },\r\n         \"spans\": [\r\n           {\r\n             \"traceId\": \"71699b6fe85982c7c8995ea3d9c95df2\",\r\n             \"spanId\": \"3c191d03fa8be065\",\r\n             \"name\": \"spanitron\",\r\n             \"kind\": 2,\r\n             \"start_time_unix_nano\": 1588334156464409000,\r\n             \"end_time_unix_nano\": 1588334156470454639,             \r\n             \"droppedAttributesCount\": 0,\r\n             \"events\": [\r\n                {\r\n                  \"time_unix_nano\": 1588334156464409000,\r\n                  \"name\": \"testEvent\",\r\n                  \"attributes\": [\r\n                     {\r\n                        \"key\": \"key1\",\r\n                        \"type\": 3,\r\n                        \"bool_value\": true\r\n                      }\r\n                    ]\r\n                  }                 \r\n             ],\r\n             \"droppedEventsCount\": 0,\r\n             \"status\": {\r\n               \"code\": 1\r\n             }\r\n           }           \r\n         ]\r\n       }\r\n     ]\r\n   }\r\n ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:4317/v1/traces",
+					"host": [
+						"localhost"
+					],
+					"port": "4317",
+					"path": [
+						"v1",
+						"traces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenTelemetry V1 Metric",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"resourceMetrics\":[{\"resource\":{\"attributes\":[{\"key\":\"resource-attr\",\"value\":{\"stringValue\":\"resource-attr-val-1\"}}]},\"scopeMetrics\":[{\"scope\":{},\"metrics\":[{\"name\":\"counter-int\",\"unit\":\"1\",\"sum\":{\"dataPoints\":[{\"attributes\":[{\"key\":\"label-1\",\"value\":{\"stringValue\":\"label-value-1\"}}],\"startTimeUnixNano\":\"1581452773000000789\",\"timeUnixNano\":\"1581452773000000789\",\"asInt\":\"123\"},{\"attributes\":[{\"key\":\"label-2\",\"value\":{\"stringValue\":\"label-value-2\"}}],\"startTimeUnixNano\":\"1581452772000000321\",\"timeUnixNano\":\"1581452773000000789\",\"asInt\":\"456\"}],\"aggregationTemporality\":2,\"isMonotonic\":true}},{\"name\":\"counter-int\",\"unit\":\"1\",\"sum\":{\"dataPoints\":[{\"attributes\":[{\"key\":\"label-1\",\"value\":{\"stringValue\":\"label-value-1\"}}],\"startTimeUnixNano\":\"1581452772000000321\",\"timeUnixNano\":\"1581452773000000789\",\"asInt\":\"123\"},{\"attributes\":[{\"key\":\"label-2\",\"value\":{\"stringValue\":\"label-value-2\"}}],\"startTimeUnixNano\":\"1581452772000000321\",\"timeUnixNano\":\"1581452773000000789\",\"asInt\":\"456\"}],\"aggregationTemporality\":2,\"isMonotonic\":true}}]}]}]}\r\n"
+				},
+				"url": {
+					"raw": "localhost:4316/v1/metrics",
+					"host": [
+						"localhost"
+					],
+					"port": "4316",
+					"path": [
+						"v1",
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
