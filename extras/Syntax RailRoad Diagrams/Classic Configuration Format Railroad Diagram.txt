@@ -1,0 +1,148 @@
+// the following code will generate the diagram using https://tabatkins.github.io/railroad-diagrams/generator.html
+Diagram( 
+  Comment('Fluent Bit - Classic Format Configuration'),
+  Sequence(Stack(
+  Optional(
+    Group(
+      Sequence(
+        NonTerminal('[ENV]'),
+        Terminal('<attribute>'),
+        OneOrMore(Sequence(NonTerminal(' '))),
+        Terminal('<attribute>'),
+        Comment('one entry per line')
+      ),
+      'env'
+    ) , 'skip'       
+  ),
+  Optional(
+    OneOrMore(
+      Group(
+        Sequence (
+          NonTerminal('[SERVICE]'), 
+//          Stack(
+            ZeroOrMore(
+              Sequence(
+                Choice(0, 
+                  NonTerminal('Daemon'), 
+                  NonTerminal('Flush'), 
+                  NonTerminal('Grace'), 
+                  NonTerminal('HTTP_Listen'), 
+                  NonTerminal('HTTP_Port'),
+                  NonTerminal('HTTP_Server'),
+                  NonTerminal('Log_File'),
+                  NonTerminal('Log_Level'),
+                  NonTerminal('Parsers_File'),
+                  NonTerminal('Plugins_File'), 
+                  Group(
+                    Choice(0,
+                      NonTerminal('storage.path'), 
+                      NonTerminal('storage.sync'), 
+                      NonTerminal('storage.checksum'), 
+                      NonTerminal('storage.backlog.mem_limit')
+                    ), 
+                    'Storage'
+                  )
+                ), 
+                OneOrMore(Sequence(NonTerminal(' '))),
+                Terminal('<attribute>'),
+                Comment('one entry per line')
+              )
+            )
+          // )
+        ),
+        'service'
+      )
+    )
+  ),
+  Optional(
+    OneOrMore(
+      Group(
+        Sequence (
+          NonTerminal('[INPUT]'), 
+//          Stack(
+            Sequence(
+              NonTerminal('name'), 
+              OneOrMore(Sequence(NonTerminal(' '))),
+              Terminal('<plugin name>')
+            ),
+            Sequence(
+              NonTerminal('type'), 
+              OneOrMore(Sequence(NonTerminal(' '))),
+              Terminal('<plugin type>')
+            ),
+            ZeroOrMore(
+              Sequence(
+                NonTerminal('<plugin attribute name>'), 
+                OneOrMore(Sequence(NonTerminal(' '))),
+                Terminal('<attribute>'),
+                Comment('one entry per line')
+              )
+            )
+          //)
+        ),
+        'input'
+      )
+    )
+  ),
+  ZeroOrMore(
+    Group(
+      Sequence (
+        NonTerminal('[FILTER]'), 
+       // Stack(
+          Sequence(
+            NonTerminal('name'), 
+            OneOrMore(Sequence(NonTerminal(' '))),
+            Terminal('<plugin name>')
+          ),
+          Sequence(
+            NonTerminal('type'), 
+            OneOrMore(Sequence(NonTerminal(' '))),
+            Terminal('<plugin type>')
+          ),
+          Optional(
+            OneOrMore(
+              Sequence(
+                NonTerminal('<plugin attribute name>'), 
+                OneOrMore(Sequence(NonTerminal(' '))),
+                Terminal('<attribute>'),
+                Comment('one entry per line')
+              )
+            )
+          )
+        // )
+      ),
+      'filter'
+    )
+  ),
+  ZeroOrMore(
+      Group(
+        Sequence(
+          NonTerminal('[OUTPUT]'), 
+          //Stack(
+            Sequence(
+              NonTerminal('name'), 
+              OneOrMore(Sequence(NonTerminal(' '))),
+              Terminal('<plugin name>')
+            ),
+            Sequence(
+              NonTerminal('type'), 
+              OneOrMore(Sequence(NonTerminal(' '))),
+              Terminal('<plugin type>')
+            ),
+            Optional(
+              OneOrMore(
+                Sequence(
+                  NonTerminal('<plugin attribute name>'), 
+                  OneOrMore(Sequence(NonTerminal(' '))),
+                  Terminal('<attribute>'),
+                  Comment('one entry per line')
+                )
+              )
+            )
+          //)
+          ),
+          'output'
+      )
+    )
+  )
+))

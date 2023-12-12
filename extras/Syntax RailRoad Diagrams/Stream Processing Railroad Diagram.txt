@@ -1,0 +1,221 @@
+Diagram( 
+  Comment('Fluent Bit - Stream Processor', 'https://github.com/fluent/fluent-bit/tree/master/src/stream_processor'),
+  Sequence (
+    Optional(
+      Sequence(
+        NonTerminal('CREATE STREAM'),
+        Terminal('<id>'),
+        Optional(
+          Sequence(
+            NonTerminal('WITH'), 
+            OneOrMore(
+              Sequence(
+                Terminal('<id>'), 
+                NonTerminal('='), 
+                Terminal('<id>')
+              ),
+            NonTerminal(',')
+            )
+          ),
+          'skip'
+        ), 
+        NonTerminal('AS')
+      ), 
+      'skip'
+    ),
+    Group( //select
+      Sequence(
+        NonTerminal('SELECT'), 
+      Stack(
+        Sequence(
+          Group( //keys
+            Choice(0, 
+            NonTerminal('*'), 
+            Group( // record_keys
+              Choice(0,
+                OneOrMore(
+                  Sequence(
+                    Group( //exp
+                    Sequence(
+                      Choice(0,Terminal('<key>'),
+                        Group( //fun
+                          Choice(0, 
+                            Sequence (NonTerminal('AVG'), Terminal ('<key>')), 
+                            Sequence (NonTerminal('SUM'), Terminal ('<key>')), 
+                            Sequence (NonTerminal('COUNT'), Terminal ('<key>')), 
+                            Sequence (NonTerminal('MIN'), Terminal ('<key>')), 
+                            Sequence (
+                              NonTerminal('TIMESERIES_FORECAST'), 
+                              NonTerminal('('),Terminal('<key>'),
+                              NonTerminal(','), 
+                              Terminal('<integer>'),
+                              NonTerminal(')')
+                            )
+                          ), //choice
+                          'fun' 
+                        ) // group
+                      ), //choice
+                    ), //sequence
+                    'exp'),
+                    Optional(
+                      Sequence(
+                        NonTerminal('AS'), 
+                        Terminal('<id>')
+                      ) // sequence
+                    ) // optional
+                  ), //sequence
+                  ','
+                ) // oneOrMore
+              ), //choice
+              'record_keys'
+            ) //group
+          ),
+          'keys'
+        ),
+        NonTerminal('FROM'), 
+        Group(//source
+          Choice(0,
+            Sequence(
+              NonTerminal('STREAM:'), 
+            Terminal('<id>')
+            ), 
+            Sequence(
+              NonTerminal('TAG:'), 
+              Terminal('<id>')
+            )
+          ),
+          'source'
+        ) //group source
+      ),
+      Optional(
+        Sequence(
+          NonTerminal('WHERE'), 
+          Group(//condition
+            Sequence(
+              Optional(
+                Choice(0, 
+                NonTerminal('('), 
+                NonTerminal('NOT')
+                ), // choice
+                'skip'
+              ), //optional
+              OneOrMore(
+                Sequence(
+                  Choice (0, 
+                    Terminal('<key>'), 
+                    Terminal('<value>'), 
+                    Sequence(
+                      Terminal('<key>'), 
+                      Group(
+                        Choice(0, 
+                          NonTerminal('='),
+                          NonTerminal('!='),
+                          NonTerminal('<>'),
+                          NonTerminal('<'),
+                          NonTerminal('<='),
+                          NonTerminal('>'),
+                          NonTerminal('>=')), 
+                        'relation'
+                        ), 
+                      Terminal('<value>')
+                    ),
+                    Sequence(
+                      NonTerminal('@record.contains'), 
+                      NonTerminal('('),
+                      Terminal('<key>'),
+                      NonTerminal(')')
+                    ),
+                    Sequence(
+                      NonTerminal('@record.contains'), 
+                      Terminal('<id>'),
+                      NonTerminal('IS'),
+                      Optional(
+                        NonTerminal('NOT'),
+                        'skip'
+                      ),
+                      NonTerminal('NULL')
+                    ),
+                  ),
+                  Optional(
+                    NonTerminal(')'),
+                    'skip')
+                  ), 
+                  Choice(0,
+                    NonTerminal('AND'), 
+                    NonTerminal('OR')
+                  )
+                )
+              ), 'condition'
+            ), 
+          )
+        ),
+        Optional(
+          Sequence(
+            Optional(
+              Choice(0,
+                Sequence(
+                  NonTerminal('WINDOW TUMBLING'), 
+                  Terminal('<integer>'),
+                  NonTerminal('SECOND')
+                ), // tumbling sequence
+                Sequence(
+                  NonTerminal('WINDOW HOPPING'), 
+                  Terminal('<integer>'),
+                  NonTerminal('SECOND'),
+                  NonTerminal(','),
+                  NonTerminal('ADVANCE BY'),
+                  Terminal('<integer>'),
+                  NonTerminal('SECOND')
+                ) // hopping sequence
+              ), 'skip' 
+            ),
+            Optional(
+              Sequence(
+                NonTerminal('GROUP BY'), 
+               Group( //record_keys
+                 Sequence(
+                 OneOrMore(
+                  Group( //exp
+                    Sequence(
+                      Choice(0,
+                        Terminal('<key>'),
+                        Group( //fun
+                          Choice(0, 
+                           Sequence (NonTerminal('AVG'), Terminal ('key')), 
+                           Sequence (NonTerminal('SUM'), Terminal ('key')), 
+                           Sequence (NonTerminal('COUNT'), Terminal ('key')), 
+                           Sequence (NonTerminal('MIN'), Terminal ('key')), 
+                           Sequence (
+                              NonTerminal('TIMESERIES_FORECAST'), 
+                              NonTerminal('('),
+                              Terminal('<key>'),
+                              NonTerminal(','),
+                              Terminal('<integer>'),
+                              NonTerminal(')')
+                            )
+                         ), //choice
+                         'fun' 
+                      ) // group
+                    ), //choice
+                  ), //sequence
+                  'exp'),
+                   ',', 'skip'
+                  ),
+                  Optional(
+                    Sequence(
+                      NonTerminal('AS'),
+                      Terminal('<id>')
+                    )
+                  )
+                ),
+                'record_keys'
+              ),
+             ), 'skip'
+          )
+        ), 'skip'
+      )
+      )
+    ), 
+    'select'),
+  ),
+)
