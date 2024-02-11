@@ -1,0 +1,45 @@
+service:
+  log_level: info
+  http_server: on
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: random
+      tag: test-tag
+      interval_sec: 5
+      processors:
+        logs:
+          - name: lua
+            call: modify
+            code: |
+              function modify(tag, timestamp, record)
+                new_record = record
+                new_record["original_val"] = record["rand_value"]
+                local num = tonumber(record["rand_value"])
+                local newNum = string.format("%d", num/2)
+                new_record["rand_value"] = newNum
+                new_record["tag"] = tag
+                local handler = io.popen("ping -c 1 -i 0.1 google.com")
+                new_record["ping"] = handler:read("*a")
+                return 1, timestamp, new_record
+              end
+  #filters:
+  #  - name: stdout
+  #    match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
+      processors:
+        logs:
+          - name: lua
+            call: modify_out
+            code: |
+              function modify_out(tag, timestamp, record)
+                  new_record = record
+                  local search = record["ping"]
+                 local start = string.find(search, " ms")
+                new_record["ping"] = string.sub(search, 0, start + 2) 
+                  new_record["output"] = "new data"
+                  return 1, timestamp, new_record
+                end
