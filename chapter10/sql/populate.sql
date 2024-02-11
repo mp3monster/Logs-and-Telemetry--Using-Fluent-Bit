@@ -1,0 +1,2 @@
+INSERT INTO pluginsrc (a_key, a_string, a_number, a_dtg, a_decimal) VALUES (10001, 'record one', 12234, '2024-01-26 21:17:47.943048332', 10000000.0001);
+INSERT INTO pluginsrc (a_key, a_string, a_number, a_dtg, a_decimal) VALUES (10002, 'record two', 999, '2024-01-26 21:18:47.1000', 20000999.0001);
