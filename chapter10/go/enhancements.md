@@ -16,6 +16,14 @@ We would recommend looking at:
 
 There is a good list of available drivers [here](https://zchee.github.io/golang-wiki/SQLDrivers/).
 
+##### MySQL Driver Issue
+
+The MySQL drive that has been used is a pure Go implementation. However we have found that if the query doesn't yield any rows, it actually throws a nil pointer/memory error which triggers a panic. To mitigate this we have implemented a *select count(* * ) step. This issue needs to raised and addressed with the driver.
+
+##### Query Optimization
+
+The Query implementation allows for a multiple row result. This is against the possibility we can cache the result and play lines back  once the context issue is addressed  for the input plugin. This will make the performance more efficient rather than querying once per row. The alternative to this is to modify the code to use Go's single record query implementation.
+
 ### Caching of DB connections
 
 Between invocations, the DB driver structure is not cached, and we reconstruct a new connection. As creating connections can be inefficient, caching the connection between invocations. There are some additional complexities that would need to be considered:
@@ -31,3 +39,7 @@ When the plugin starts for the 1st time, it is possible that there is a lot of d
 ### Sourcing Password rather than in configuration
 
 Currently, the database credentials are passed through from the configuration of the pipeline.  It would be particularly good if we could retrieve the credentials via other mechanisms, such as retrieving them directly from a credentials repository such as Keycloak.
+
+### Unit Testing
+
+The testing for the book has been manual, rather than proper unit tests with automation. Along with the generation of godoc.

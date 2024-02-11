@@ -8,6 +8,6 @@ It makes use of a Docker image that, when built, will compile the code.
 
 ## Additional Details
 
-- [Workaround to constraint within Fluent Bit's current input API](./po-plugin-input-constraint.md)
+- [Workaround to constraint within Fluent Bit's current input API](./go-plugin-input-constraint.md)
 - [Enhancement suggestions / Work to get to enterprise fit](./enhancements.md)
 - [Documentation on the Plugin's attributes, configuration, and expected use cases](./src/README.md)
