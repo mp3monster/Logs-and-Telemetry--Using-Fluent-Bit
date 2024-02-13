@@ -1,3 +1,6 @@
+create database demo;
+use demo;
+
 CREATE TABLE pluginsrc
 (
     a_key varchar(100) NOT NULL,
