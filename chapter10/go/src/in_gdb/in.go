@@ -87,14 +87,13 @@ func FLBPluginInit(plugin unsafe.Pointer) int {
 		return input.FLB_ERROR
 	}
 	if strings.Contains(strings.ToLower(input.FLBPluginConfigKey(plugin, "Log_Level")), "debug") {
-		//fmt.Printf("[%s] configured with %v\n", params.PluginName, params)
+		fmt.Printf("[%s] configured with %v\n", params.PluginName, params)
 	}
 
 	validateErr := validateSqlParams(params)
 	if validateErr == nil {
 		cacheParams(params)
-		log.Printf(SprintfParams(params, PluginName))
-
+		//log.Printf(SprintfParams(params, PluginName))
 		return input.FLB_OK
 	} else {
 		fmt.Printf("[%s] - Configuration error - %s \n", params.PluginName, validateErr)
