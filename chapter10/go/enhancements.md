@@ -1,8 +1,14 @@
 The following details suggested enhancements that could be applied to the plugin to make it more enterprise-capable.
 
+### Functional Behavior
 
+In the functional space, then we could improve in the following ways:
 
-### Additional DB Drivers
+##### Datable column Value as the event timestamp
+
+Rather than apply the timestamp for the record based on when we ingest the record, it would be good if there was the option to set the timestamp to match one of the columns of the table. So that the timestamp reflected when the event actually happened.
+
+### Additional DB Drivers and performance
 
 Currently, the implementation only makes use of the Postgres database driver. The ideal goal is that the plugin can be configured to work with multiple DB server types as it sticks to using ANSI SQL.
 
@@ -23,6 +29,10 @@ The MySQL drive that has been used is a pure Go implementation. However we have 
 ##### Query Optimization
 
 The Query implementation allows for a multiple row result. This is against the possibility we can cache the result and play lines back  once the context issue is addressed  for the input plugin. This will make the performance more efficient rather than querying once per row. The alternative to this is to modify the code to use Go's single record query implementation.
+
+Update Optimization
+
+Rather than inserting each record as it is read from the output plugin callback - if there are multiple records, we then insert them in a single transaction, being more efficient with the database.
 
 ### Caching of DB connections
 

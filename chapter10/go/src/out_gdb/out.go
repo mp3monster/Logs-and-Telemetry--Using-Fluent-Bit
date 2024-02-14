@@ -19,6 +19,8 @@ func releaseResources() error {
 	return nil
 }
 
+// built the params struct by retrieving from the plugin congiuration the values, including
+// translating data to the correct types
 func getParams(plugin unsafe.Pointer) (*SqlParams, error) {
 	if plugin == nil {
 		return nil, errors.New("Plugin not provided")
@@ -42,6 +44,9 @@ func getParams(plugin unsafe.Pointer) (*SqlParams, error) {
 	return &params, nil
 }
 
+// The function that provides the details of the plugin to Fluent Bit to allow the association
+// of the plugin name to the config file, and allow the CLI help to show the plugin role.
+//
 //export FLBPluginRegister
 func FLBPluginRegister(def unsafe.Pointer) int {
 	log.Printf("[%s] Register called", PluginName)
@@ -51,6 +56,11 @@ func FLBPluginRegister(def unsafe.Pointer) int {
 	return output.FLB_OK
 }
 
+// Called after the the registration, this callback is triggered so that the configuration values can be retrieved
+// and checked - if we do not have all the necessary values, or they're incorrectly formed we need to report an
+// error back to the core of Fluent Bit.
+// For this plugin we check the parameters and prove we can ping the database
+//
 //export FLBPluginInit
 func FLBPluginInit(plugin unsafe.Pointer) int {
 	params, err := getParams(plugin)
@@ -82,12 +92,19 @@ func FLBPluginInit(plugin unsafe.Pointer) int {
 	return output.FLB_OK
 }
 
+// The plugin has flush with and without contexts. We want to use the conte
+// , so just return ok. But also allow us to see it being invoked with a log message
+//
 //export FLBPluginFlush
 func FLBPluginFlush(data unsafe.Pointer, length C.int, tag *C.char) int {
 	log.Printf("[%s] Flush called for unknown instance\n", PluginName)
 	return output.FLB_OK
 }
 
+// This is the context based flush, This callback is responsible for the outyput to the destination of
+// the supplied data. To ensure we're sending the data in the correct direction we make use of
+// the context data we have stored.
+//
 //export FLBPluginFlushCtx
 func FLBPluginFlushCtx(ctx, data unsafe.Pointer, length C.int, tag *C.char) int {
 	// Type assert context back into the original type for the Go variable
@@ -154,6 +171,8 @@ func FLBPluginExit() int {
 	return output.FLB_OK
 }
 
+// When the plugin needs to be stopped then this method is called. For example a hot reload
+//
 //export FLBPluginExitCtx
 func FLBPluginExitCtx(ctx unsafe.Pointer) int {
 	// Type assert context back into the original type for the Go variable
@@ -168,6 +187,9 @@ func FLBPluginExitCtx(ctx unsafe.Pointer) int {
 	return output.FLB_OK
 }
 
+// This is the final callback used- and we need to release any retained resources.
+// In our case - there is nothing to do
+//
 //export FLBPluginUnregister
 func FLBPluginUnregister(def unsafe.Pointer) {
 	log.Print("[out_gdb] Unregister called")
