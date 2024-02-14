@@ -50,6 +50,12 @@ When the plugin starts for the 1st time, it is possible that there is a lot of d
 
 Currently, the database credentials are passed through from the configuration of the pipeline.  It would be particularly good if we could retrieve the credentials via other mechanisms, such as retrieving them directly from a credentials repository such as Keycloak.
 
+### Adopt SSL/TLS
+
+Currently SSL/TLS is disabled in the connection as the certificates in the container are self signed, which means additional configuration to accept the certificate authority. For production this needs to be amended (making TLS optional so non prod solutions can still be setup without the additional overhead).
+
+
+
 ### Unit Testing
 
 The testing for the book has been manual, rather than proper unit tests with automation. Along with the generation of godoc.
