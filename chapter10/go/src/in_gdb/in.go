@@ -23,6 +23,7 @@ const PluginName = "in_gdb"
 func getParams(plugin unsafe.Pointer) (*SqlParams, error) {
 	params := SqlParams{}
 	params.PluginName = PluginName
+	params.InstanceName = input.FLBPluginConfigKey(plugin, Plugin_InstanceId)
 	params.Host = input.FLBPluginConfigKey(plugin, Plugin_Host)
 	params.Port = input.FLBPluginConfigKey(plugin, Plugin_Port)
 	params.User = input.FLBPluginConfigKey(plugin, Plugin_User)
@@ -84,10 +85,11 @@ func FLBPluginRegister(def unsafe.Pointer) int {
 func FLBPluginInit(plugin unsafe.Pointer) int {
 	params, err := getParams(plugin)
 	if err != nil {
+		log.Printf("%s failed to initialise because %s", PluginName, err)
 		return input.FLB_ERROR
 	}
 	if strings.Contains(strings.ToLower(input.FLBPluginConfigKey(plugin, "Log_Level")), "debug") {
-		fmt.Printf("[%s] configured with %v\n", params.PluginName, params)
+		log.Printf("[%s] configured with %v\n", params.PluginName, params)
 	}
 
 	validateErr := validateSqlParams(params)
@@ -102,6 +104,18 @@ func FLBPluginInit(plugin unsafe.Pointer) int {
 
 }
 
+// we need to send the paload as a map of string/string but we receive it as a
+// vecordValType - which needs to become string-string
+func dataLineToStrMap(dataLine interface{}) map[string]string {
+	line := dataLine.(recordValType)
+	result := make(map[string]string)
+	for k, v := range line {
+		result[k] = typeToStr(v, false)
+	}
+
+	return result
+}
+
 // This is the main method.  It runs by retrieving a record from the DB and then translating the data into
 // a data structure. To prevent an tight loop if there are no more records to return we put things to sleep
 // the logic currently is geared to pulling multiple records from the DB - on the basis we could hold them
@@ -110,6 +124,7 @@ func FLBPluginInit(plugin unsafe.Pointer) int {
 //export FLBPluginInputCallback
 func FLBPluginInputCallback(data *unsafe.Pointer, size *C.size_t) int {
 	//log.Printf("FLBPluginInputCallback - START --------------")
+	var dataCtr int = 0
 	now := time.Now()
 	params := retrieveParams()
 
@@ -117,41 +132,40 @@ func FLBPluginInputCallback(data *unsafe.Pointer, size *C.size_t) int {
 
 	dataSet, sequenceId := dynamicQuery(params)
 
-	if dataSet != nil {
+	if dataSet != nil && len(dataSet) > 0 {
+		dataCtr = len(dataSet)
 		if len(sequenceId) > 0 {
 			params.LatestSequencerId = sequenceId
 			// as we're using the last key - we need to update our cache
 			cacheParams(params)
 		}
-		dataCtr := len(dataSet)
 
 		//log.Printf("[%s] InputCallback no records: %v\n", PluginName, dataCtr)
+		var entry []interface{} = nil
 		if dataCtr > 0 {
-			var entry []interface{}
 			for dataLine := 0; dataLine < dataCtr; dataLine++ {
-				recd := []interface{}{flbTime, dataSet[dataLine]}
+				recd := dataLineToStrMap(dataSet[dataLine])
 				entry = []interface{}{flbTime, recd}
-				log.Printf("[%s] InputCallback - retrieved data %v\n", PluginName, entry)
 			}
-
-			// the internal representation uses msgpack so now we need to compress the record
-			enc := input.NewEncoder()
-			packed, err := enc.Encode(entry)
-			if err != nil {
-				log.Printf("[%s] error: %s,\n Can't convert to msgpack: %v\n", PluginName, err, entry)
-				return input.FLB_ERROR
-			}
-
-			//translate the data into the format that means it can be processed by the Fluent Bit C core
-			length := len(packed)
-			*data = C.CBytes(packed)
-			*size = C.size_t(length)
-		} else {
-			length := 0
-			*data = nil
-			*size = C.size_t(length)
+			log.Printf("[%s] InputCallback - retrieved data %v\n", PluginName, entry)
 		}
+
+		// the internal representation uses msgpack so now we need to compress the record
+		enc := input.NewEncoder()
+		packed, err := enc.Encode(entry)
+		if err != nil {
+			log.Printf("[%s] error: %s,\n Can't convert to msgpack: %v\n", PluginName, err, entry)
+			return input.FLB_ERROR
+		}
+
+		//translate the data into the format that means it can be processed by the Fluent Bit C core
+		length := len(packed)
+		*data = C.CBytes(packed)
+		*size = C.size_t(length)
 	} else {
+		length := 0
+		*data = nil
+		*size = C.size_t(length)
 		// no data - to avoid immediatelu been called again - lets take a nap
 		log.Printf("[%s] InputCallback -- no data found", PluginName)
 

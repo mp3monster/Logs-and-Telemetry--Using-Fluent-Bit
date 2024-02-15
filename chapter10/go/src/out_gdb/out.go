@@ -3,7 +3,6 @@ package main
 import (
 	"C"
 	"log"
-	"time"
 	"unsafe"
 
 	"github.com/fluent/fluent-bit-go/output"
@@ -27,6 +26,8 @@ func getParams(plugin unsafe.Pointer) (*SqlParams, error) {
 	}
 	params := SqlParams{}
 	params.PluginName = PluginName
+
+	params.InstanceName = output.FLBPluginConfigKey(plugin, Plugin_InstanceId)
 	params.Host = output.FLBPluginConfigKey(plugin, Plugin_Host)
 	params.Port = output.FLBPluginConfigKey(plugin, Plugin_Port)
 	params.User = output.FLBPluginConfigKey(plugin, Plugin_User)
@@ -74,12 +75,12 @@ func FLBPluginInit(plugin unsafe.Pointer) int {
 
 	validateErr := validateSqlParams(params)
 	if validateErr != nil {
-		log.Printf("[%s] Configuration error -%s\n", params.PluginName, validateErr)
+		log.Printf("[%s] %s Configuration error -%s\n", params.PluginName, params.InstanceName, validateErr)
 		return output.FLB_ERROR
 	}
 
 	connectWorks := testConnectionOk(params)
-	log.Printf("[%s] Init connection test successful %b\n", params.PluginName, connectWorks)
+	log.Printf("[%s] %s Init connection test successful %t\n", params.PluginName, params.InstanceName, connectWorks)
 	if !connectWorks {
 		return output.FLB_ERROR
 	}
@@ -108,13 +109,14 @@ func FLBPluginFlush(data unsafe.Pointer, length C.int, tag *C.char) int {
 //export FLBPluginFlushCtx
 func FLBPluginFlushCtx(ctx, data unsafe.Pointer, length C.int, tag *C.char) int {
 	// Type assert context back into the original type for the Go variable
-	var params *SqlParams
+	//var params *SqlParams
+	params := NewSqlParams()
 	myContext := output.FLBPluginGetContext(ctx)
 	if myContext != nil {
 		strContext := myContext.(*string)
 		params = JSONToParams(*strContext, PluginName)
 		//log.Printf("[%s] Flush called for context: %s", params.PluginName, *strContext)
-		log.Printf("[%s] Flush called with context", params.PluginName)
+		log.Printf("[%s]%s Flush called with context", params.PluginName, params.InstanceName)
 	} else {
 		log.Printf("[%s] Flush called with no context\n", PluginName)
 		params = envToParams(PluginName)
@@ -126,38 +128,40 @@ func FLBPluginFlushCtx(ctx, data unsafe.Pointer, length C.int, tag *C.char) int 
 
 	// without our params we cant do anthing - bail
 	if params == nil {
-		log.Printf("[%s] FLBPluginFlushCtx - invoked without params", PluginName)
+		log.Printf("[%s] FLBPluginFlushCtx - invoked without params", params.PluginName)
 		return output.FLB_ERROR
 	}
 
 	dec := output.NewDecoder(data, int(length))
 
-	log.Printf("[%s] FLBPluginFlushCtx about to process:\n", PluginName)
-
 	count := 0
 	for { // for as long as there is a data value to insert
 		ret, ts, record := output.GetRecord(dec)
+
 		if ret != 0 {
 			break
 		}
+		log.Printf("[%s]%s FLBPluginFlushCtx about to process:%v with timestamp %v", PluginName, params.InstanceName, ret, ts)
 
-		var timestamp time.Time
-		switch t := ts.(type) {
-		case output.FLBTime:
-			timestamp = ts.(output.FLBTime).Time
-		case uint64:
-			timestamp = time.Unix(int64(t), 0)
-		default:
-			log.Println("[%s]time provided invalid, defaulting to now - received %T (%v). Timestamp is %d", PluginName, t, t, timestamp)
-			timestamp = time.Now()
-		}
-
+		/*		var timestamp time.Time
+				switch t := ts.(type) {
+				case output.FLBTime:
+					timestamp = ts.(output.FLBTime).Time
+				case uint64:
+					timestamp = time.Unix(int64(t), 0)
+				case string:
+					timestamp = ts.(string)
+				default:
+					log.Println("[%s]%s time provided invalid, defaulting to now - received (%T). Timestamp is %v", params.PluginName, params.InstanceName, ts, ts)
+					timestamp = time.Now()
+				}
+		*/
 		// Print record keys and values
 		//log.Printf("[%s] record received:%v", PluginName, record)
 		count++
 		insertErr := execInsert(params, record)
 		if insertErr != nil {
-			log.Printf("[%s] Error during insert, returning fail\n%v", PluginName, insertErr)
+			log.Printf("[%s]%s Error during insert, returning fail\n%v", params.PluginName, params.InstanceName, insertErr)
 			return output.FLB_ERROR
 		}
 	}
@@ -167,7 +171,7 @@ func FLBPluginFlushCtx(ctx, data unsafe.Pointer, length C.int, tag *C.char) int 
 
 //export FLBPluginExit
 func FLBPluginExit() int {
-	log.Print("[out_gdb] Exit called for unknown instance")
+	log.Print("[%s] Exit called for unknown instance", PluginName)
 	return output.FLB_OK
 }
 
@@ -176,14 +180,22 @@ func FLBPluginExit() int {
 //export FLBPluginExitCtx
 func FLBPluginExitCtx(ctx unsafe.Pointer) int {
 	// Type assert context back into the original type for the Go variable
+	params := NewSqlParams()
 	context := output.FLBPluginGetContext(ctx)
 	if context != nil {
-		log.Printf("[%s] Exit called with context: %v", PluginName, context)
+		strContext := context.(*string)
+		params = JSONToParams(*strContext, PluginName)
+		//log.Printf("[%s] Flush called for context: %s", params.PluginName, *strContext)
+		log.Printf("[%s]%s Flush called with context", params.PluginName, params.InstanceName)
 	} else {
-		// if we don't have a context to work with we have to pass our configs around using the
-		log.Printf("[%s] Exit called NIL context", PluginName)
-		releaseResources()
+		params = envToParams(PluginName)
+		log.Printf("[%s]FLBPluginExitCtx fell back to env\n", PluginName)
+		if params == nil {
+			log.Printf("[%s] FLBPluginExitCtx no params\n", PluginName)
+			return output.FLB_ERROR
+		}
 	}
+	releaseResources()
 	return output.FLB_OK
 }
 
