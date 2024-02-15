@@ -18,6 +18,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
+const Plugin_InstanceId = "plugin_instance_id"
 const Plugin_Host = "db_host"
 const Plugin_Port = "db_port"
 const Plugin_User = "db_user"
@@ -38,6 +39,7 @@ const Plugin_LatestSequencerId = "LstSeqId"
 // https://go101.org/article/struct.html
 type SqlParams struct {
 	PluginName       string `json:"pgnname,omitempty"` // the name of the plugin that the configuration applies to
+	InstanceName     string `json:"instNme,omitempty"` // to help differentiate the activities of different occurrences of the plugin we can provide an identifying name
 	Host             string `json:"host,omitempty"`    // the server running the DB
 	Port             string `json:"port,omitempty"`    // The port to use to connect to the DB
 	User             string `json:"usr,omitempty"`     // uasername to connect to the DB with
@@ -59,7 +61,7 @@ type SqlParams struct {
 const PostgresDBType = "postgres"
 const mysqlDBType = "mysql"
 const ParamCGFPostfix = "-cfg"
-const InsertTimeout = time.Second * 60
+const InsertTimeout = time.Second * 1
 
 // return a string representation of the data type
 func printType(description string, data interface{}) {
@@ -76,25 +78,10 @@ func NewSqlParams() *SqlParams {
 	return &params
 }
 
-// some times won't transform correctly when using Postgres such as the Numeric type ends up being an
-// array of 8 bit unsigned integers (effectively characters) so we need a special conversion.
-// By using interfaces the remaining logic can be have as normal
-// TODO: determine if there are other types in Postgres
-// TODO:DB Type overloading
-func specialTypeHandler(data interface{}) interface{} {
-	if data == nil {
-		log.Printf("specialTypeHandler - received nil")
-		return nil
-	}
-	switch (data).(type) {
-	case []uint8:
-		var value string = fmt.Sprintf("%s", data)
-
-		return value
-	default:
-		return data
-	}
-}
+// each element is represented with this definiot - with the column name being the string key
+// by sharing the data with the column name and the data in its native type rather than a string helps
+// with subsequent perocessing which may want to know what the base daat type is
+type recordValType map[string]interface{}
 
 // to ensure we get a proper converstion between non string data types and strings
 // we can use this function to ensure they're handled ok
@@ -361,7 +348,7 @@ func buildQueryExpr(params *SqlParams, countStmt bool) string {
 		}
 		sqlStmt = sqlStmt + " LIMIT 1" //+ strconv.Itoa(params.Limit)
 	}
-	log.Printf("[%s] Query constructed:%s", params.PluginName, sqlStmt)
+	log.Printf("[%s]%s Query constructed:%s", params.PluginName, params.InstanceName, sqlStmt)
 
 	return sqlStmt
 }
@@ -480,13 +467,13 @@ func execInsert(params *SqlParams, value RowDefinition) error {
 	sqlStmt, err := buildInsertExpr(params, value)
 	if err == nil {
 		_, err := tx.ExecContext(ctx, sqlStmt)
-		fmt.Println(sqlStmt)
+		fmt.Printf("[%s]%s insert expression: %s", params.PluginName, params.InstanceName, sqlStmt)
 		if err != nil {
-			log.Println("[%s] Error with insert %v", params.PluginName, err)
+			log.Println("[%s]%s Error with insert %v", params.PluginName, params.InstanceName, err)
 			return err
 		}
 	} else {
-		log.Println("[%s] SQL context error %v", params.PluginName, err)
+		log.Println("[%s]%s SQL context error %v", params.PluginName, params.InstanceName, err)
 	}
 	//}
 
@@ -501,9 +488,10 @@ func execInsert(params *SqlParams, value RowDefinition) error {
 // without resorting to a full query validate that the conection details will work.
 func testConnectionOk(params *SqlParams) bool {
 	db, err := sql.Open(params.DBType, buildConnectionStr(params))
+
 	if err = db.Ping(); err != nil {
 		db.Close()
-		log.Printf("[%s] connection test failed for\n%s\n%v", params.PluginName, SprintfParams(params, params.PluginName), err)
+		log.Printf("[%s]%s connection test failed for\n%s\n%v", params.PluginName, params.InstanceName, SprintfParams(params, params.PluginName), err)
 		return false
 	}
 	return true
@@ -530,7 +518,6 @@ func checkForData(db *sql.DB, sqlExpr string) (bool, error) {
 // based on https://kylewbanks.com/blog/query-result-to-map-in-golang
 // func execQuery(sqlExpr string, sequencerCol string, db *sql.DB) (map[string]interface{}, string, error) {
 func execQuery(sqlExpr string, sequencerCol string, pk string, db *sql.DB) ([]interface{}, []interface{}, string, error) {
-	type recordValType map[string]interface{}
 
 	dbRows, err := db.Query(sqlExpr)
 	if err != nil {
@@ -562,7 +549,7 @@ func execQuery(sqlExpr string, sequencerCol string, pk string, db *sql.DB) ([]in
 	// for MySQL we will get a SQL error if there are no rows retrieved
 	dbErr := dbRows.Err()
 	if dbErr != nil {
-		log.Printf("DbErr:%v", dbErr)
+		log.Printf("execQuery - DbErr:%v", dbErr)
 		return nil, nil, "", nil
 
 	}
@@ -590,10 +577,9 @@ func execQuery(sqlExpr string, sequencerCol string, pk string, db *sql.DB) ([]in
 		// storing it in the map with the name of the column as the key.
 		for i, colName := range colNames {
 			val := columnPointers[i].(*interface{})
-			*val = specialTypeHandler(*val)
+			*val = typeToStr(*val, false)
 			if colName == sequencerCol {
 				lastSequenceValue = val
-				log.Printf("-------- execQuery test colName")
 			}
 
 			// if value is the identified primary then add the value to the myKeys array
@@ -610,7 +596,7 @@ func execQuery(sqlExpr string, sequencerCol string, pk string, db *sql.DB) ([]in
 
 		}
 
-		log.Printf("row = %v", myMap)
+		log.Printf("execQuery row being sent = %v", myMap)
 
 		if myData == nil {
 			myData = make([]interface{}, 1)
@@ -651,7 +637,7 @@ func dynamicQuery(params *SqlParams) ([]interface{}, string) {
 		}
 
 		//fmt.Println("Result=", result)
-		log.Printf("KeyList=%s Last Sequence Id=%s,  delete is %s\n", keyList, lastSeqId, params.DeleteAfterQuery)
+		log.Printf("KeyList=%s Last Sequence Id=%s,  delete is %t\n", keyList, lastSeqId, params.DeleteAfterQuery)
 
 		if keyList != nil && params.DeleteAfterQuery {
 			execDelete(params, keyList)
