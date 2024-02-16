@@ -143,19 +143,6 @@ func FLBPluginFlushCtx(ctx, data unsafe.Pointer, length C.int, tag *C.char) int 
 		}
 		log.Printf("[%s]%s FLBPluginFlushCtx about to process:%v with timestamp %v", PluginName, params.InstanceName, ret, ts)
 
-		/*		var timestamp time.Time
-				switch t := ts.(type) {
-				case output.FLBTime:
-					timestamp = ts.(output.FLBTime).Time
-				case uint64:
-					timestamp = time.Unix(int64(t), 0)
-				case string:
-					timestamp = ts.(string)
-				default:
-					log.Println("[%s]%s time provided invalid, defaulting to now - received (%T). Timestamp is %v", params.PluginName, params.InstanceName, ts, ts)
-					timestamp = time.Now()
-				}
-		*/
 		// Print record keys and values
 		//log.Printf("[%s] record received:%v", PluginName, record)
 		count++

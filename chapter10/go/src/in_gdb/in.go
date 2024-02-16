@@ -98,7 +98,7 @@ func FLBPluginInit(plugin unsafe.Pointer) int {
 		//log.Printf(SprintfParams(params, PluginName))
 		return input.FLB_OK
 	} else {
-		fmt.Printf("[%s] - Configuration error - %s \n", params.PluginName, validateErr)
+		fmt.Printf("[%s]%s - Configuration error - %s \n", params.PluginName, patams.InstanceName, validateErr)
 		return input.FLB_ERROR
 	}
 
@@ -126,9 +126,8 @@ func FLBPluginInputCallback(data *unsafe.Pointer, size *C.size_t) int {
 	//log.Printf("FLBPluginInputCallback - START --------------")
 	var dataCtr int = 0
 	now := time.Now()
-	params := retrieveParams()
-
 	flbTime := input.FLBTime{now}
+	params := retrieveParams()
 
 	dataSet, sequenceId := dynamicQuery(params)
 
