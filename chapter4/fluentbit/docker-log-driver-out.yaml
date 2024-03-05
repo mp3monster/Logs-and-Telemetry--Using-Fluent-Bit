@@ -1,0 +1,15 @@
+service:
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: forward
+      port: 24224
+      listen: 0.0.0.0
+
+    - name: docker
+      interval_sec: 1
+
+  outputs:
+    - name: stdout
+      match: "*"

@@ -1,0 +1,19 @@
+service:
+  flush_interval: 1
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: docker_events
+      tag: myDockerEvents
+      key: DockerDoes
+      listen: 0.0.0.0
+      reconnect.retry_limits: 2
+      reconnect.retry_interval: 5
+
+    - name: docker
+      interval_sec: 1
+
+  outputs:
+    - name: stdout
+      match: "*"

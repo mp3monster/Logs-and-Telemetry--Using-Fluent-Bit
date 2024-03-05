@@ -1,0 +1,22 @@
+service:
+  flush_interval: 1
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: kubernetes_events
+      tag: kubernetes_events
+      kube_url: https://kubernetes.default.svc
+      tls.verify: off
+      interval_sec: 5
+      kube_token_file: xxx
+      kube_request_limit: 100
+      kube_retention_time: 15m
+    #kube_namespace
+
+    - name: docker
+      interval_sec: 1
+
+  outputs:
+    - name: stdout
+      match: "*"
