@@ -1,0 +1,37 @@
+service:
+  flush_interval: 1
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: http
+      port: 9881
+      listen: 0.0.0.0
+      successful_response_code: 200
+      success_header:
+        - x-fluent-svc fluent-bit
+        - x-input-id 1
+      tag: http
+
+    - name: http
+      port: 9891
+      listen: 0.0.0.0
+      successful_response_code: 200
+      success_header:
+        - x-fluent-svc fluent-bit
+        - x-input-id 2
+      tag: http
+
+    - name: forward
+      port: 9980
+      listen: 0.0.0.0
+      tag: forward
+
+  outputs:
+    - name: forward
+      match: "http"
+      host: 127.0.0.1
+      port: 9980
+
+    - name: stdout
+      match: "*"

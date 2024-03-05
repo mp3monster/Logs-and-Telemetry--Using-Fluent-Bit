@@ -1,0 +1,12 @@
+service:
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: foward
+      port: 24224
+      listen: 0.0.0.0
+
+  outputs:
+    - name: stdout
+      match: "source-node"
