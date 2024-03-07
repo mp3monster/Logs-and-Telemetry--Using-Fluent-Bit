@@ -1,0 +1,17 @@
+service:
+  flush_interval: 5
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: node_exporter_metrics
+      tag: node_metrics
+      scrape_interval: 5
+
+  outputs:
+    - name: prometheus_exporter
+      match: "*"
+      host: 127.0.0.1
+      port: 9885
+      add_label:
+        - fluentbit exporter

@@ -1,0 +1,45 @@
+service:
+  flush_interval: 1
+  log_level: trace
+
+pipeline:
+  inputs:
+    - name: fluentbit_metrics
+      tag: node_metrics
+      scrape_interval: 300
+
+    - name: dummy
+      tag: dummy.log
+
+    - name: event_type
+      type: traces
+
+    - name: opentelemetry
+      listen: 127.0.0.1
+      port: 4318
+
+    - name: opentelemetry
+      listen: 127.0.0.1
+      port: 4317
+      tag: trace
+
+    - name: opentelemetry
+      listen: 127.0.0.1
+      port: 4316
+      tag: metric
+
+  outputs:
+    - name: stdout
+      match: "*"
+
+    - name: opentelemetry
+      match: "*"
+      host: 127.0.0.1
+      port: 8080
+      logs_uri: /my/logs
+      traces_uri: /my/traces
+      metrics_uri: /my/metrics
+      log_response_payload: true
+      add_label:
+        - app fluent-bit-demo
+        - client fluent-bit

@@ -1,0 +1,23 @@
+service:
+  flush_interval: 1
+  log_level: error
+
+pipeline:
+  inputs:
+    - name: http
+      tag: http-in
+      listen: 0.0.0.0
+      port: 9881
+
+  outputs:
+    - name: http
+      match: "*"
+      host: localhost
+      port: 8080
+      uri: /simple
+      format: json
+      header: fluentbit http
+      json_date_format: iso8601
+
+    - name: stdout
+      match: "*"

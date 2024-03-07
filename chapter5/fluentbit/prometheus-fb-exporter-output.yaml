@@ -1,0 +1,17 @@
+service:
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: fluentbit_metrics
+      tag: fluentbitmetrics
+      scrape_interval: 5
+      scrape_on_start: true
+
+  outputs:
+    - name: prometheus_exporter
+      match: "*"
+      host: 0.0.0.0
+      port: 9885
+      add_label:
+        - fluentbit exporter

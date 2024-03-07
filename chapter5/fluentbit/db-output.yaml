@@ -1,0 +1,21 @@
+service:
+  flush_interval: 1
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: http
+      tag: input1
+      listen: 0.0.0.0
+      port: 9881
+
+  outputs:
+    - name: pgsql
+      match: "*"
+      host: localhost
+      port: 5455
+      user: postgresUser
+      password: postgresPW
+      database: postgres
+      table: fluentbit
+      timestamp_key: ts
