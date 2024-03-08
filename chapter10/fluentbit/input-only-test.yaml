@@ -1,0 +1,29 @@
+service:
+  flush_interval: 5
+  daemon: Off
+  log_level: info
+  parsers_file: parsers.conf
+  plugins_file: plugins.conf
+  HTTP_server: Off
+  HTTP_listen: 0.0.0.0
+  HTTP_port: 2020
+
+pipeline:
+  inputs:
+    - name: in_gdb
+      tag: db1
+      db_host: 192.168.1.135
+      db_port: 3306
+      db_user: demo
+      db_password: demo
+      ordering_col: a_key
+      table_name: pluginsrc
+      db_name: demo
+      db_type: mysql
+      pk: a_key
+      delete: "false"
+      query_cols: a_key, a_string
+
+  outputs:
+    - name: stdout
+      match: "*"
