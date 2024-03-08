@@ -1,0 +1,35 @@
+service:
+  flush_interval: 5
+  log_level: trace
+
+pipeline:
+  inputs:
+    - name: fluentbit_metrics
+      tag: internal_metrics
+      scrape_interval: 5
+
+  # The following OUTPUT declaration is for connecting with Grafana Cloud
+  outputs:
+    - name: prometheus_remote_write
+      match: "*"
+      # the host needs to be modified based on your account setup
+      host: prometheus-prod-05-gb-south-0.grafana.net
+      uri: /api/prom/push
+      port: 443
+      tls: on
+      log_response_payload: on
+      add_label: fluentbit cloud
+      # the following two attributes need to be modified for your account
+      http_user: <my-userid>
+      http_passwd: <my-password>
+
+    # The following configuration is for communicating with the containerized
+    # configuration of Prometheus we've provided
+    - name: prometheus_remote_write
+      match: "*"
+      host: 192.168.1.135
+      uri: /api/v1/write
+      port: 9090
+      tls: off
+      log_response_payload: on
+      add_label: fluentbit local

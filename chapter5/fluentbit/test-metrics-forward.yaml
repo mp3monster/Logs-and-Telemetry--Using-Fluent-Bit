@@ -1,0 +1,22 @@
+service:
+  flush_interval: 1
+  log_level: trace
+
+pipeline:
+  inputs:
+    - name: opentelemetry
+      # use this for Traces
+      tag: metric
+      listen: 127.0.0.1
+      port: 4316
+
+  outputs:
+    - name: stdout
+      match: log
+
+    - name: opentelemetry
+      match: "*"
+      host: 192.168.1.135
+      port: 8080
+      metrics_uri: /my/metrics
+      log_response_payload: true

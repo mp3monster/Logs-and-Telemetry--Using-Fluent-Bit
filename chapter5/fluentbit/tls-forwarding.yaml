@@ -1,0 +1,21 @@
+service:
+  flush_interval: 1
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: http
+      tag: input1
+      listen: 0.0.0.0
+      port: 9881
+
+  outputs:
+    - name: http
+      match: "*"
+      shared_key: your-shared-key
+      empty_shared_key: empty shared key
+      self_hostname: localhost
+      tls.verify: false
+      tls.ca_file: you.ca_file
+      tls.crt_file: your.crt_file
+      tls.key_file: your.key_file
