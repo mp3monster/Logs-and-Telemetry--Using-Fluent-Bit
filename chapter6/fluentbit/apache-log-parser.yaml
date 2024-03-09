@@ -1,0 +1,26 @@
+service:
+  flush_interval: 1
+  parsers_file:
+    - ./fluentbit/parsers.conf
+    - "${FLUENTBIT_HOME}/conf/parsers.conf"
+
+pipeline:
+  inputs:
+    - name: tail
+      tag: apache-feed
+      path: ./apache-log
+      read_from_head: true
+
+  filters:
+    - name: parser
+      match: "*"
+      key_name: log
+      parser:
+        - apache
+        - myApache
+      preserve_key: true
+      reserve_data: false
+
+  outputs:
+    - name: stdout
+      match: "*"
