@@ -58,3 +58,10 @@ chapter4/fluentbit/std-output-answer.conf.ignore
 chapter4/wiremock/mapping-authed-POST.redundant
 
 *.hide
+
+
+chapter10/go/lib/pkg/mod/*
+
+go-exp/
+
+chapter10/go_baseline/*
