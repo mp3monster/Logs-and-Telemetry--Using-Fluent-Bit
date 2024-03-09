@@ -1,0 +1,57 @@
+service:
+  flush_interval: 1
+  parsers_file: "${FLUENTBIT_HOME}/conf/parsers.conf"
+
+pipeline:
+  inputs:
+    - name: tail
+      tag: Apps.App2.Nginx
+      path: ./nginx.json.log
+      read_from_head: true
+      parser: json
+
+  filters:
+    - name: checklist
+      match: Apps.App2.*
+      file: ./fluentbit/ip-checklist.data
+      lookup_key: remote_ip
+      ignore_case: false
+      mode: partial
+      record: known_origin yes
+      print_query_time: false
+
+    - name: record_modifier
+      match: Apps.App2.*
+      record: "hostname ${HOSTNAME}"
+      uuid_key: myUUID
+
+    - name: modify
+      match: Apps.*
+      rename:
+        - remote_user user
+        - widget gadget
+
+    #    - name: stdout
+    #      match: Apps.*
+
+    - name: rewrite_tag
+      match: Apps.*
+      rule: known_origin ^(yes) priority true
+      log_level: debug
+
+    - name: modify
+      match: priority
+      remove:
+        - agent
+        - request
+        - referrer
+      set: known_origin matched
+
+  outputs:
+    - name: stdout
+      match: priority
+
+    - name: file
+      match: Apps.*
+      path: .
+      file: Apps-all.txt

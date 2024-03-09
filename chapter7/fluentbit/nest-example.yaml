@@ -1,0 +1,26 @@
+service:
+  flush_interval: 1
+  parsers_file: "${FLUENTBIT_HOME}/conf/parsers.conf"
+
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy1
+      dummy: '{ "time": "12/May/2023:08:05:52 +0000", "remote_ip": "10.4.72.163", "user_remote": "-", "user_local": "-", "user":"1", "request": {   "verb": "GET",  "path": {  "path1": " /downloads/",  "path_product": "product_2" }, "protocol": "HTTP","version": "1.1"},"response": 304}'
+
+  filters:
+    - name: nest
+      match: "*"
+      operation: nest
+      wildcard: user*
+      nest_under: users
+      remove_prefix: user_
+
+    - name: nest
+      match: "*"
+      operation: lift
+      nested_under: request
+
+  outputs:
+    name: stdout
+    match: "*"

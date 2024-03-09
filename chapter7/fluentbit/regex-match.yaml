@@ -1,0 +1,33 @@
+service:
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"message":"an ERROR message using a numeric code"}'
+      tag: myTag.1
+
+    - name: dummy
+      dummy: '{"message":"an ERROR message"}'
+      tag: myTag.error
+
+    #  - name: dummy
+    #  dummy: '{"message":"a warning message"}'
+    #  tag: myTag.warn
+
+    - name: dummy
+      dummy: '{"message":"a warning message using numeric code"}'
+      tag: myTag.2
+
+    - name: dummy
+      dummy: '{"message":"an info message"}'
+      tag: myTag.info
+
+    - name: dummy
+      dummy: '{"message":"an info message using a numeric"}'
+      tag: myTag.3
+
+  outputs:
+    - name: stdout
+      match_regex: "myTag.(error|warn|1|2)"
+      format: json
