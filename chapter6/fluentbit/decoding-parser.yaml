@@ -1,0 +1,25 @@
+service:
+  flush_interval: 1
+  parsers_file: ./fluentbit/parsers3.conf
+
+pipeline:
+  inputs:
+    - name: tail
+      tag: codedFeed
+      path: ./codedJSON.log
+
+  filters:
+    - name: parser
+      match: "*"
+      key_name: log
+      parser: noDecoder
+      #parsers_file:
+      #- myDecodingUnstructured
+      #- myJSONOnly
+      #- myJSONDecodedUTF
+      preserve_key: false
+      reserve_data: true
+
+  outputs:
+    - name: stdout
+      match: "*"

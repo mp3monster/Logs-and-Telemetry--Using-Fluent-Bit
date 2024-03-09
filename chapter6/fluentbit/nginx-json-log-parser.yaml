@@ -1,0 +1,31 @@
+service:
+  flush_interval: 1
+  parsers_file:
+    - ./fluentbit/json-parser.conf
+    - ./fluentbit/parsers2.conf
+
+pipeline:
+  inputs:
+    - name: tail
+      tag: nginx-feed
+      path: ./nginx.json.log
+      read_from_head: false
+
+  filters:
+    - name: parser
+      match: "*"
+      key_name: log
+      parser: myNginxJSONParser
+      preserve_key: false
+      reserve_data: false
+
+    - name: parser
+      match: "*"
+      key_name: remote_ip
+      parser: myNginxOctet1
+      preserve_key: true
+      reserve_data: true
+
+  outputs:
+    - name: stdout
+      match: "*"

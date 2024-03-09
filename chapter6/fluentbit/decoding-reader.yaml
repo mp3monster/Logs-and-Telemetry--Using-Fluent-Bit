@@ -1,0 +1,15 @@
+service:
+  flush_interval: 1
+  parsers_file: ./fluentbit/parsers3.conf
+
+pipeline:
+  inputs:
+    - name: tail
+      tag: codedFeed
+      path: ./codedJSON.log
+      parser: myJSONDecodedUTF
+      #read_from_head: true
+
+  outputs:
+    - name: stdout
+      match: "*"
