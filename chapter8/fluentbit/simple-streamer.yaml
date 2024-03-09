@@ -1,0 +1,28 @@
+service:
+  flush_interval: 5
+  log_level: info
+  streams_file: ./stream.conf
+
+pipeline:
+  inputs:
+    - name: random
+      tag: dum
+      Interval_Sec: 1
+
+  name: dummy
+  tag: dummy1
+  dummy: '{"data":"3", "message":"im here"}'
+
+#  - name: dummy
+#    dummy: '{"data":{"inner":"5"}}'
+#    tag: dummy2
+
+#  - name: dummy
+#    dummy: {"data":{"inner":"1"}}
+#    tag: dummy3
+
+outputs:
+  - name: null
+    match: "*"
+    #format: json
+    #json_date_format: iso8601

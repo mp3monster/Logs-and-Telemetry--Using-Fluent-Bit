@@ -1,0 +1,21 @@
+service:
+  flush_interval: 5
+  log_level: info
+  streams_file: ./query.conf
+#  - ./query2.conf
+#  - ./query2-stream-name.conf
+#  - ./query3.conf
+
+pipeline:
+  inputs:
+    - name: random
+  interval_sec: 1
+  tag: random-num
+
+  outputs:
+    - name: null
+      match: "*"
+#  - name: stdout
+#  match: *
+#  name: stdout
+#  json_date_format: iso8601

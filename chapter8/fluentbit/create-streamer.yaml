@@ -1,0 +1,19 @@
+service:
+  flush_interval: 5
+  log_level: info
+  streams_file: ./create.conf
+  # streams_file: ./create2.conf
+
+pipeline:
+  inputs:
+    - name: random
+      interval_sec: 1
+      tag: random-num
+
+  outputs:
+    #  - name: stdout
+    #    match: random-num
+    # uncomment the above to see the original input value
+
+    - name: stdout
+      match: myStream.*

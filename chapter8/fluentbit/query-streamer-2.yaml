@@ -1,0 +1,28 @@
+service:
+  flush_interval: 5
+  log_level: info
+  streams_file: ./query-naming.conf
+
+pipeline:
+  inputs:
+    - name: dummy
+      tag: complexMsg
+      samples: 20
+      dummy: '{"myData":{"innerNo":"1", "innerText1" : "blah", "innerText2" : "more blah"}, "outterNo": "10", "outterTextA" : "widget", "outterTextB" : "gadget"}'
+
+    - name: dummy
+      tag: simpleMsg
+      samples: 20
+      dummy: '{"myMessage":"Im simple", "really" : "I am"}'
+
+    - name: dummy
+      tag: simpleMsg
+      samples: 20
+      dummy: '{"myMessage":"I dont know what to say"}'
+
+  outputs:
+    - name: null
+      match: "*"
+#  - name: stdout
+#  match: "*"
+#  json_date_format: iso8601

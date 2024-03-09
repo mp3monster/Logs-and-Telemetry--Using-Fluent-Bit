@@ -1,0 +1,23 @@
+service:
+  flush_interval: 5
+  log_level: info
+  streams_file: ./query3.conf
+#  - ./query.conf
+#  - ./query2.conf
+
+pipeline:
+  inputs:
+    #  name random
+    #  interval_sec 1
+    #  tag random-num
+
+    - name: dummy
+      dummy: { "rand_value": "1" }
+      tag: random-num
+
+  outputs:
+    - name: stdout
+      match: "*"
+      json_date_format: iso8601
+#  - name: null
+#    match: *
