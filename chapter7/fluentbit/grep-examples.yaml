@@ -1,0 +1,72 @@
+service:
+  flush_interval: 1
+  parsers_file: "${FLUENTBIT_HOME}/conf/parsers.conf"
+
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{   "time": "12/May/2023:08:05:52 +0000",   "remote_ip": "10.4.72.163",   "remote_user": "-",   "request": {     "verb": "GET",     "path": " /downloads/product_2",     "protocol": "HTTP",     "version": "1.1"   },   "response": 304}'
+      tag: dummy1
+
+    - name: dummy
+      dummy: '{   "time": "12/May/2023:08:05:52 +0000",   "remote_ip": "10.4.72.163",   "remote_user": "-",   "request": {     "verb": "GET",     "path": " /downloads/product_2",     "protocol": "HTTP",     "version": "1.1"   },   "response": 304}'
+      tag: dummy2
+
+    - name: dummy
+      dummy: '{   "time": "12/May/2023:08:05:52 +0000",   "remote_ip": "10.4.72.163",   "remote_user": "-",   "request": {     "verb": "GET",     "path": " /downloads/product_2",     "protocol": "HTTP",     "version": "1.1"   },   "response": 304}'
+      tag: dummy3
+
+    - name: dummy
+      dummy: '{   "time": "12/May/2023:08:05:52 +0000",   "remote_ip": "10.4.72.163",   "remote_user": "-",   "request": {     "verb": "GET",     "path": " /downloads/product_2",     "protocol": "HTTP",     "version": "1.1"   },   "response": 304}'
+      tag: dummy4
+
+    - name: dummy
+      dummy: '{   "time": "12/May/2023:08:05:52 +0000",   "remote_ip": "10.4.72.163",   "remote_user": "-",   "request": {     "verb": "GET",     "path": " /downloads/product_2",     "protocol": "HTTP",     "version": "1.1"   },   "response": 304}'
+      tag: dummy5
+
+    - name: dummy
+      dummy: '{   "time": "12/May/2023:08:05:52 +0000",   "remote_ip": "10.4.72.163",   "remote_user": "-",   "request": {     "verb": "GET",     "path": " /downloads/product_2",     "protocol": "HTTP",     "version": "1.1"   },   "response": 304}'
+      tag: dummy6
+
+  filters:
+    - name: grep
+      match: dummy1
+      match_regex:
+        - "request['protocol'] ^(HTTP)"
+        - remote_ip (11)
+      logical_op: or
+
+    - name: grep
+      match: dummy2
+      regex:
+        - "request['protocol'] ^(HTTP)"
+        - remote_ip (11)
+      logical_op: and
+
+    - name: grep
+      match: dummy3
+      exclude:
+        - "request['protocol'] ^(HTTP)"
+        - remote_ip (11)
+      logical_op: or
+
+    - name: grep
+      match: dummy4
+      exclude:
+        - "request['protocol'] ^(HTTP)"
+        - remote_ip (11)
+      logical_op: and
+
+    - name: grep
+      match: dummy5
+      exclude: "request['protocol'] ^(HTTP)"
+      regex: remote_ip (11)
+
+    - name: grep
+      match: dummy6
+      regex: request['protocol'] ^(HTTP)
+      exclude: remote_ip (11)
+
+  outputs:
+    - name: stdout
+      match: "*"
