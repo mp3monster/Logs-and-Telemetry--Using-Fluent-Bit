@@ -65,3 +65,5 @@ chapter10/go/lib/pkg/mod/*
 go-exp/
 
 chapter10/go_baseline/*
+
+--archive/
