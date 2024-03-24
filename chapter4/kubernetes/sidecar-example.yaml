@@ -25,7 +25,7 @@ spec:
           mountPath: /var/log
 
     - name: fluent-bit-side-car
-      image: fluent/fluentd-bit:latest
+      image: fluent/fluent-bit:latest
       volumeMounts:
         - name: varlog
           mountPath: /var/log
