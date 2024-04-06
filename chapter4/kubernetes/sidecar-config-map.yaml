@@ -22,3 +22,7 @@ data:
       match *
       file /var/combined-output.txt
       format plain
+
+    [OUTPUT]
+      name stdout
+      match *
