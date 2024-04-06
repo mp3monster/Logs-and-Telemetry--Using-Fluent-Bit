@@ -1,0 +1,40 @@
+# HELP fluentbit_input_bytes_total Number of input bytes.
+# TYPE fluentbit_input_bytes_total counter
+fluentbit_input_bytes_total{name="cpu.0"} 254467 1712445769978
+fluentbit_input_bytes_total{name="mem.2"} 26559 1712445769978
+fluentbit_input_bytes_total{name="netif.1"} 28851 1712445769978
+# HELP fluentbit_input_records_total Number of input records.
+# TYPE fluentbit_input_records_total counter
+fluentbit_input_records_total{name="cpu.0"} 227 1712445769978
+fluentbit_input_records_total{name="mem.2"} 227 1712445769978
+fluentbit_input_records_total{name="netif.1"} 226 1712445769978
+# HELP fluentbit_output_dropped_records_total Number of dropped records.
+# TYPE fluentbit_output_dropped_records_total counter
+fluentbit_output_dropped_records_total{name="null.0"} 0 1712445769978
+# HELP fluentbit_output_errors_total Number of output errors.
+# TYPE fluentbit_output_errors_total counter
+fluentbit_output_errors_total{name="null.0"} 0 1712445769978
+# HELP fluentbit_output_proc_bytes_total Number of processed output bytes.
+# TYPE fluentbit_output_proc_bytes_total counter
+fluentbit_output_proc_bytes_total{name="null.0"} 308511 1712445769978
+# HELP fluentbit_output_proc_records_total Number of processed output records.
+# TYPE fluentbit_output_proc_records_total counter
+fluentbit_output_proc_records_total{name="null.0"} 677 1712445769978
+# HELP fluentbit_output_retried_records_total Number of retried records.
+# TYPE fluentbit_output_retried_records_total counter
+fluentbit_output_retried_records_total{name="null.0"} 0 1712445769978
+# HELP fluentbit_output_retries_failed_total Number of abandoned batches because the maximum number of re-tries was reached.
+# TYPE fluentbit_output_retries_failed_total counter
+fluentbit_output_retries_failed_total{name="null.0"} 0 1712445769978
+# HELP fluentbit_output_retries_total Number of output retries.
+# TYPE fluentbit_output_retries_total counter
+fluentbit_output_retries_total{name="null.0"} 0 1712445769978
+# HELP fluentbit_uptime Number of seconds that Fluent Bit has been running.
+# TYPE fluentbit_uptime counter
+fluentbit_uptime 228
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1712445541
+# HELP fluentbit_build_info Build version information.
+# TYPE fluentbit_build_info gauge
+fluentbit_build_info{version="2.2.1",edition="Community"} 1

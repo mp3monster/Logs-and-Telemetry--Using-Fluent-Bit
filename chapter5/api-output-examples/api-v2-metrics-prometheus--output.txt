@@ -1,0 +1,147 @@
+# HELP fluentbit_uptime Number of seconds that Fluent Bit has been running.
+# TYPE fluentbit_uptime counter
+fluentbit_uptime{hostname="Watts"} 173
+# HELP fluentbit_input_bytes_total Number of input bytes.
+# TYPE fluentbit_input_bytes_total counter
+fluentbit_input_bytes_total{name="cpu.0"} 192812
+# HELP fluentbit_input_records_total Number of input records.
+# TYPE fluentbit_input_records_total counter
+fluentbit_input_records_total{name="cpu.0"} 172
+# HELP fluentbit_input_bytes_total Number of input bytes.
+# TYPE fluentbit_input_bytes_total counter
+fluentbit_input_bytes_total{name="netif.1"} 21845
+# HELP fluentbit_input_records_total Number of input records.
+# TYPE fluentbit_input_records_total counter
+fluentbit_input_records_total{name="netif.1"} 171
+# HELP fluentbit_input_bytes_total Number of input bytes.
+# TYPE fluentbit_input_bytes_total counter
+fluentbit_input_bytes_total{name="mem.2"} 20124
+# HELP fluentbit_input_records_total Number of input records.
+# TYPE fluentbit_input_records_total counter
+fluentbit_input_records_total{name="mem.2"} 172
+# HELP fluentbit_output_proc_records_total Number of processed output records.
+# TYPE fluentbit_output_proc_records_total counter
+fluentbit_output_proc_records_total{name="null.0"} 512
+# HELP fluentbit_output_proc_bytes_total Number of processed output bytes.
+# TYPE fluentbit_output_proc_bytes_total counter
+fluentbit_output_proc_bytes_total{name="null.0"} 233415
+# HELP fluentbit_output_errors_total Number of output errors.
+# TYPE fluentbit_output_errors_total counter
+fluentbit_output_errors_total{name="null.0"} 0
+# HELP fluentbit_output_retries_total Number of output retries.
+# TYPE fluentbit_output_retries_total counter
+fluentbit_output_retries_total{name="null.0"} 0
+# HELP fluentbit_output_retries_failed_total Number of abandoned batches because the maximum number of re-tries was reached.
+# TYPE fluentbit_output_retries_failed_total counter
+fluentbit_output_retries_failed_total{name="null.0"} 0
+# HELP fluentbit_output_dropped_records_total Number of dropped records.
+# TYPE fluentbit_output_dropped_records_total counter
+fluentbit_output_dropped_records_total{name="null.0"} 0
+# HELP fluentbit_output_retried_records_total Number of retried records.
+# TYPE fluentbit_output_retried_records_total counter
+fluentbit_output_retried_records_total{name="null.0"} 0
+# HELP fluentbit_process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE fluentbit_process_start_time_seconds gauge
+fluentbit_process_start_time_seconds{hostname="Watts"} 1712444979
+# HELP fluentbit_build_info Build version information.
+# TYPE fluentbit_build_info gauge
+fluentbit_build_info{hostname="Watts",version="2.2.1",os="linux"} 1712444979
+# HELP fluentbit_hot_reloaded_times Collect the count of hot reloaded times.
+# TYPE fluentbit_hot_reloaded_times gauge
+fluentbit_hot_reloaded_times{hostname="Watts"} 0
+# HELP fluentbit_storage_chunks Total number of chunks in the storage layer.
+# TYPE fluentbit_storage_chunks gauge
+fluentbit_storage_chunks 3
+# HELP fluentbit_storage_mem_chunks Total number of memory chunks.
+# TYPE fluentbit_storage_mem_chunks gauge
+fluentbit_storage_mem_chunks 3
+# HELP fluentbit_storage_fs_chunks Total number of filesystem chunks.
+# TYPE fluentbit_storage_fs_chunks gauge
+fluentbit_storage_fs_chunks 0
+# HELP fluentbit_storage_fs_chunks_up Total number of filesystem chunks up in memory.
+# TYPE fluentbit_storage_fs_chunks_up gauge
+fluentbit_storage_fs_chunks_up 0
+# HELP fluentbit_storage_fs_chunks_down Total number of filesystem chunks down.
+# TYPE fluentbit_storage_fs_chunks_down gauge
+fluentbit_storage_fs_chunks_down 0
+# HELP fluentbit_input_ingestion_paused Is the input paused or not?
+# TYPE fluentbit_input_ingestion_paused gauge
+fluentbit_input_ingestion_paused{name="cpu.0"} 0
+# HELP fluentbit_input_storage_overlimit Is the input memory usage overlimit ?.
+# TYPE fluentbit_input_storage_overlimit gauge
+fluentbit_input_storage_overlimit{name="cpu.0"} 0
+# HELP fluentbit_input_storage_memory_bytes Memory bytes used by the chunks.
+# TYPE fluentbit_input_storage_memory_bytes gauge
+fluentbit_input_storage_memory_bytes{name="cpu.0"} 1121
+# HELP fluentbit_input_storage_chunks Total number of chunks.
+# TYPE fluentbit_input_storage_chunks gauge
+fluentbit_input_storage_chunks{name="cpu.0"} 1
+# HELP fluentbit_input_storage_chunks_up Total number of chunks up in memory.
+# TYPE fluentbit_input_storage_chunks_up gauge
+fluentbit_input_storage_chunks_up{name="cpu.0"} 1
+# HELP fluentbit_input_storage_chunks_down Total number of chunks down.
+# TYPE fluentbit_input_storage_chunks_down gauge
+fluentbit_input_storage_chunks_down{name="cpu.0"} 0
+# HELP fluentbit_input_storage_chunks_busy Total number of chunks in a busy state.
+# TYPE fluentbit_input_storage_chunks_busy gauge
+fluentbit_input_storage_chunks_busy{name="cpu.0"} 0
+# HELP fluentbit_input_storage_chunks_busy_bytes Total number of bytes used by chunks in a busy state.
+# TYPE fluentbit_input_storage_chunks_busy_bytes gauge
+fluentbit_input_storage_chunks_busy_bytes{name="cpu.0"} 0
+# HELP fluentbit_input_ingestion_paused Is the input paused or not?
+# TYPE fluentbit_input_ingestion_paused gauge
+fluentbit_input_ingestion_paused{name="netif.1"} 0
+# HELP fluentbit_input_storage_overlimit Is the input memory usage overlimit ?.
+# TYPE fluentbit_input_storage_overlimit gauge
+fluentbit_input_storage_overlimit{name="netif.1"} 0
+# HELP fluentbit_input_storage_memory_bytes Memory bytes used by the chunks.
+# TYPE fluentbit_input_storage_memory_bytes gauge
+fluentbit_input_storage_memory_bytes{name="netif.1"} 128
+# HELP fluentbit_input_storage_chunks Total number of chunks.
+# TYPE fluentbit_input_storage_chunks gauge
+fluentbit_input_storage_chunks{name="netif.1"} 1
+# HELP fluentbit_input_storage_chunks_up Total number of chunks up in memory.
+# TYPE fluentbit_input_storage_chunks_up gauge
+fluentbit_input_storage_chunks_up{name="netif.1"} 1
+# HELP fluentbit_input_storage_chunks_down Total number of chunks down.
+# TYPE fluentbit_input_storage_chunks_down gauge
+fluentbit_input_storage_chunks_down{name="netif.1"} 0
+# HELP fluentbit_input_storage_chunks_busy Total number of chunks in a busy state.
+# TYPE fluentbit_input_storage_chunks_busy gauge
+fluentbit_input_storage_chunks_busy{name="netif.1"} 0
+# HELP fluentbit_input_storage_chunks_busy_bytes Total number of bytes used by chunks in a busy state.
+# TYPE fluentbit_input_storage_chunks_busy_bytes gauge
+fluentbit_input_storage_chunks_busy_bytes{name="netif.1"} 0
+# HELP fluentbit_input_ingestion_paused Is the input paused or not?
+# TYPE fluentbit_input_ingestion_paused gauge
+fluentbit_input_ingestion_paused{name="mem.2"} 0
+# HELP fluentbit_input_storage_overlimit Is the input memory usage overlimit ?.
+# TYPE fluentbit_input_storage_overlimit gauge
+fluentbit_input_storage_overlimit{name="mem.2"} 0
+# HELP fluentbit_input_storage_memory_bytes Memory bytes used by the chunks.
+# TYPE fluentbit_input_storage_memory_bytes gauge
+fluentbit_input_storage_memory_bytes{name="mem.2"} 117
+# HELP fluentbit_input_storage_chunks Total number of chunks.
+# TYPE fluentbit_input_storage_chunks gauge
+fluentbit_input_storage_chunks{name="mem.2"} 1
+# HELP fluentbit_input_storage_chunks_up Total number of chunks up in memory.
+# TYPE fluentbit_input_storage_chunks_up gauge
+fluentbit_input_storage_chunks_up{name="mem.2"} 1
+# HELP fluentbit_input_storage_chunks_down Total number of chunks down.
+# TYPE fluentbit_input_storage_chunks_down gauge
+fluentbit_input_storage_chunks_down{name="mem.2"} 0
+# HELP fluentbit_input_storage_chunks_busy Total number of chunks in a busy state.
+# TYPE fluentbit_input_storage_chunks_busy gauge
+fluentbit_input_storage_chunks_busy{name="mem.2"} 0
+# HELP fluentbit_input_storage_chunks_busy_bytes Total number of bytes used by chunks in a busy state.
+# TYPE fluentbit_input_storage_chunks_busy_bytes gauge
+fluentbit_input_storage_chunks_busy_bytes{name="mem.2"} 0
+# HELP fluentbit_output_upstream_total_connections Total Connection count.
+# TYPE fluentbit_output_upstream_total_connections gauge
+fluentbit_output_upstream_total_connections{name="null.0"} 0
+# HELP fluentbit_output_upstream_busy_connections Busy Connection count.
+# TYPE fluentbit_output_upstream_busy_connections gauge
+fluentbit_output_upstream_busy_connections{name="null.0"} 0
+# HELP fluentbit_output_chunk_available_capacity_percent Available chunk capacity (percent)
+# TYPE fluentbit_output_chunk_available_capacity_percent gauge
+fluentbit_output_chunk_available_capacity_percent{name="null.0"} 100

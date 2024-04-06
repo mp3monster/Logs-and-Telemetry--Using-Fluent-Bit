@@ -1,0 +1,55 @@
+{
+  "storage_layer": {
+    "chunks": {
+      "total_chunks": 3,
+      "mem_chunks": 3,
+      "fs_chunks": 0,
+      "fs_chunks_up": 0,
+      "fs_chunks_down": 0
+    }
+  },
+  "input_chunks": {
+    "cpu.0": {
+      "status": {
+        "overlimit": false,
+        "mem_size": "1.1K",
+        "mem_limit": "0b"
+      },
+      "chunks": {
+        "total": 1,
+        "up": 1,
+        "down": 0,
+        "busy": 0,
+        "busy_size": "0b"
+      }
+    },
+    "netif.1": {
+      "status": {
+        "overlimit": false,
+        "mem_size": "128b",
+        "mem_limit": "0b"
+      },
+      "chunks": {
+        "total": 1,
+        "up": 1,
+        "down": 0,
+        "busy": 0,
+        "busy_size": "0b"
+      }
+    },
+    "mem.2": {
+      "status": {
+        "overlimit": false,
+        "mem_size": "117b",
+        "mem_limit": "0b"
+      },
+      "chunks": {
+        "total": 1,
+        "up": 1,
+        "down": 0,
+        "busy": 0,
+        "busy_size": "0b"
+      }
+    }
+  }
+}
