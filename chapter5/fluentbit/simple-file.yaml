@@ -18,29 +18,29 @@ pipeline:
 
     - name: file
       match: "*"
-      file: ouput1.csv
+      file: output1.csv
       format: csv
       delimiter: \t
 
     - name: file
       match: "*"
-      file: ouput1.ltsv
+      file: output1.ltsv
       format: ltsv
       label_delimiter: comma
       delimiter: comma
 
     - name: file
       match: "*"
-      file: ouput1.txt
+      file: output1.txt
       format: plain
 
     - name: file
       match: "*"
-      file: ouput1.msgpack
+      file: output1.msgpack
       format: msgpack
 
     - name: file
       match: "*"
       format: template
-      file: ouput1.templated.txt
+      file: output1.templated.txt
       template: addressing={hello} value={val} --- {time}
