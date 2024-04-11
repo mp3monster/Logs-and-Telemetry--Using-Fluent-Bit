@@ -16,7 +16,8 @@ services:
       - "--web.enable-remote-write-receiver"
     ports:
       - 9090:9090
-    network_mode: bridge
+    network_mode: host
+    #network_mode: bridge
 #
 # Notes:
 # https://github.com/prometheus/pushgateway
