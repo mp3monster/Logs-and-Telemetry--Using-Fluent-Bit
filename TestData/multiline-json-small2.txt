@@ -1,0 +1,19 @@
+{"msg" : "I changed my password to incorrect. 
+- So whenever I forget what it is the computer will say Your password is incorrect", "name" : {"firstname": "Arthur", "surname":"Dent"}, "age": 25}
+END
+{"msg" : "A clean house is the sign of a broken computer", "name" : 
+- {"firstname": "Ford", "surname":"Prefect"}, "age": 25}
+END
+{"msg" : "Question What do you call the security people outside of a Samsung Store? Answer Guardians of the Galaxy", "name" : {"firstname": "Zaphod", "surname":"Beeblebrox"}, "age": 25}
+END
+{"msg" : "Maybe if we start telling people the brain is an app they will start 
+- using it.", "name" : {"firstname": "Trillian", "surname":"Astra"}, "age": 25}
+END
+{"msg" : "I think my neighbor is stalking me
+-  as she has been googling my name on her computer.
+-   I saw it through my telescope last night.", 
+-   "name" : {"firstname": "Slarti", "surname":"Bartfast"}, 
+-  "age": 75}
+END
+{"msg" : "I wonder what my parents did to fight boredom before the internet. I asked my 17 brothers and sisters and they didnt know either.", "name" : {"firstname": "Pharti", "surname":"Phukborlz"}, "age": 75}
+END
