@@ -1,0 +1,21 @@
+service:
+  log_level: info
+  http_server: on
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: node_exporter_metrics
+      tag: flb-metrics
+      scrape_interval: 5
+      processors:
+        metrics:
+          - name: metrics_selector
+            action: include
+            operation_type: prefix
+            metric_name: node_cpu
+            # operation_type
+
+  outputs:
+    - name: stdout
+      match: "*"
