@@ -8,5 +8,5 @@ service:
 pipeline:
   inputs:
     - name: dummy
-      Dummy: '{ "hello": "my world" }'
+      dummy: '{ "hello": "my world" }'
       tag: dummy1
