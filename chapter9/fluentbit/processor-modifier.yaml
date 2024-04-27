@@ -1,0 +1,39 @@
+service:
+  log_level: info
+  http_server: on
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy-input
+      dummy: '{ "message": "hello my world", "recipient" : "no one", "noName" : "nameless" }'
+      interval_sec: 10
+      processors:
+        logs:
+          - name: content_modifier
+            action: insert
+            key: "ImNew"
+            value: "cool value"
+  filters:
+    - name: stdout
+      match: "*"
+  outputs:
+    - name: stdout
+      match: "*"
+      processors:
+        logs:
+          - name: content_modifier
+            action: delete
+            key: "recipient"
+          - name: content_modifier
+            action: upsert
+            key: "message"
+            value: "I've been upserted"
+          - name: content_modifier
+            action: rename
+            key: "noName"
+            value: "newName"
+          - name: content_modifier
+            action: hash
+            key: "newName"
