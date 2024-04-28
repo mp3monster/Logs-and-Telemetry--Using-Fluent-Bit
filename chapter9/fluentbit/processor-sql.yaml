@@ -1,0 +1,22 @@
+service:
+  log_level: info
+  http_server: on
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy-input
+      dummy: '{ "message": "hello my world", "recipient" : "notMe", "noName" : "nameless" }'
+      interval_sec: 1
+    - name: dummy
+      tag: dummy-input2
+      dummy: '{ "message": "bye bye cruel world", "recipient" : "Pink Floyd", "noName" : "Im not a number"}'
+      interval_sec: 1
+  outputs:
+    - name: stdout
+      match: "*"
+      processors:
+        logs:
+          - name: sql
+            query: "SELECT message, noName FROM STREAM WHERE recipient = 'notMe';"

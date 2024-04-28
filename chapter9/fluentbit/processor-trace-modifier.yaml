@@ -1,0 +1,20 @@
+service:
+  log_level: debug
+  http_server: on
+  flush_interval: 1
+
+pipeline:
+  inputs:
+    - name: opentelemetry
+      listen: 127.0.0.1
+      port: 4317
+      processors:
+        traces:
+          - name: content_modifier
+            action: upsert
+            context: span_attributes
+            key: "key"
+            value: "Modified"
+  outputs:
+    - name: stdout
+      match: "*"
