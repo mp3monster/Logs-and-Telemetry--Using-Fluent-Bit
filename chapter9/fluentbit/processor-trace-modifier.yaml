@@ -6,14 +6,15 @@ service:
 pipeline:
   inputs:
     - name: opentelemetry
-      listen: 127.0.0.1
+      listen: 0.0.0.0
       port: 4317
+      tag_key: "blah"
       processors:
         traces:
           - name: content_modifier
-            action: upsert
+            action: insert
             context: span_attributes
-            key: "key"
+            key: "BIGKey"
             value: "Modified"
   outputs:
     - name: stdout
