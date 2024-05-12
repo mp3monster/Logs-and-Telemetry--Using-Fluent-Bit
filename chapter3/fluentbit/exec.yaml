@@ -1,0 +1,16 @@
+# This configuration isn't included in the book, but does illustrate the use of the exec plugin. where it executes the command hostname
+# as the command describes will return the hostname of the machine running Fluent Bit
+service:
+  flush: 1
+
+pipeline:
+  inputs:
+    - name: exec
+      tag: iExecuted
+      command: hostname
+      interval_sec: 1
+      oneshot: false
+
+  outputs:
+    - name: stdout
+      match: "*"
