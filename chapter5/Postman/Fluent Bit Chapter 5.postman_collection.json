@@ -16,11 +16,17 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"helloGrp\": [\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"1\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"2\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"3\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"4\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"5\"\n        }\n    ],\n    \"date\": 169023185000\n},\n{\n    \"hello\": \"Fluent\",\n    \"val\": 10,\n    \"date\": 169023145000\n},\n{\n    \"hello\": \"Fluent\",\n    \"val\": 20,\n    \"date\": 169023182000\n}",
+					"raw": "{\n    \"helloGrp\": [\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"1\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"2\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"3\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"4\"\n        },\n        {\n            \"hello\": \"Fluent\",\n            \"val\": \"5\"\n        }\n    ],\n    \"my-date\": 169023185000\n},\n{\n    \"hello\": \"Fluent\",\n    \"val\": 10,\n    \"my-date\": 169023145000\n},\n{\n    \"hello\": \"Fluent\",\n    \"val\": 20,\n    \"my-date\": 169023182000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -28,11 +34,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9881",
+					"raw": "localhost:8080/simple",
 					"host": [
 						"localhost"
 					],
-					"port": "9881"
+					"port": "8080",
+					"path": [
+						"simple"
+					]
 				},
 				"description": "Postman configuration for the HTTP endpoint use case"
 			},
