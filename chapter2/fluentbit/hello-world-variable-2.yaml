@@ -1,0 +1,15 @@
+env:
+  myTag: NotTesting
+
+service:
+  flush: 1
+
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: { "hello": "my world" }
+      tag: ${myTag}
+
+  outputs:
+    - name: stdout
+      match: "*"
