@@ -1,5 +1,5 @@
 # we look to see if we've already got the log simulator code in the environment, if we haven't then retrieve it
-# if we sdont have any configuration then pull the default and copy it into place
+# if we dont have any configuration then pull the default and copy it into place
 # if we have environment variable useExtn set to 1, then pull in the externsions
 # output the configuration we've got to use
 # run the log simulator with the identified run properties and test data
