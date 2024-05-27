@@ -1,11 +1,7 @@
-# Sames as query-streamer but with the additional configs commented out
 service:
   flush_interval: 5
   log_level: info
   streams_file: ./query.conf
-#  - ./query2.conf
-#  - ./query2-stream-name.conf
-#  - ./query3.conf
 
 pipeline:
   inputs:
