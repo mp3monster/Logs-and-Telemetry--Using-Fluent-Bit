@@ -4,8 +4,8 @@ service:
 pipeline:
   inputs:
     - name: tail
-      path: ./chapter3/structured-rolling-log.0.log
-      db: ./chapter3/rotating-file-read.db
+      path: ./structured-rolling-log.0.log
+      db: ./rotating-file-read.db
       db.locking: false
       refresh_interval: 15
       rotate_wait: 10
