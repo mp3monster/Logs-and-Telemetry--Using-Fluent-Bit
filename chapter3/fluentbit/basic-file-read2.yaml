@@ -4,7 +4,7 @@ service:
 pipeline:
   inputs:
     - name: tail
-      path: ./chapter3/basic-file.txt
+      path: ./basic-file.txt
       read_from_head: true
       tag: basic-file
 
