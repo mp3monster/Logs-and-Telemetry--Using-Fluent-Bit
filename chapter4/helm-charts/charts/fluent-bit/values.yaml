@@ -44,7 +44,7 @@ config:
     [FILTER]
         Name    lua
         Match   <your-tag>
-        script  /fluent-bit/scripts/filter_example.lua #A #H
+        script  /fluent-bit/scripts/filter_example.lua 
         call    filter_name
 
   outputs: |
