@@ -7,12 +7,12 @@ data:
     [SERVICE]
       flush 1
 
-    [SOURCE]
+    [INPUT]
       name tail
       tag source1
       path /var/log/1.log
 
-    [SOURCE]
+    [INPUT]
       name tail
       tag source2
       path /var/log/2.log
@@ -20,7 +20,7 @@ data:
     [OUTPUT]
       name file
       match *
-      file /var/combined-output.txt
+      file /var/log/combined-output.txt
       format plain
 
     [OUTPUT]
