@@ -15,7 +15,7 @@ spec:
             # Write two log files along with the date and a counter
             # every second
             echo "$i: $(date)" >> /var/log/1.log;
-            echo "$(date) INFO $i" >> /var/log/2.log;
+            echo "$(date) INFO Log2 $i" >> /var/log/2.log;
             i=$((i+1));
             sleep 1;
           done
@@ -30,7 +30,7 @@ spec:
         - name: varlog
           mountPath: /var/log
         - name: config-volume
-          mountPath: /fluent-bit/etc/fluent-bit.conf
+          mountPath: /fluent-bit/etc
 
   volumes:
     - name: varlog
