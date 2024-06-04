@@ -16,6 +16,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
+	//_ "github.com/ziutek/mymysql"
 )
 
 const Plugin_InstanceId = "plugin_instance_id"
@@ -489,9 +490,14 @@ func execInsert(params *SqlParams, value RowDefinition) error {
 func testConnectionOk(params *SqlParams) bool {
 	db, err := sql.Open(params.DBType, buildConnectionStr(params))
 
+	if db == nil {
+		log.Printf("[%s]%s connection test failed for\n%s\n%v", params.PluginName, params.InstanceName, SprintfParams(params, params.PluginName), err)
+		return false
+	}
+
 	if err = db.Ping(); err != nil {
 		db.Close()
-		log.Printf("[%s]%s connection test failed for\n%s\n%v", params.PluginName, params.InstanceName, SprintfParams(params, params.PluginName), err)
+		log.Printf("[%s]%s connection test ping failed for\n%s\n%v", params.PluginName, params.InstanceName, SprintfParams(params, params.PluginName), err)
 		return false
 	}
 	return true
