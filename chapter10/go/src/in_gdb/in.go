@@ -98,7 +98,7 @@ func FLBPluginInit(plugin unsafe.Pointer) int {
 		//log.Printf(SprintfParams(params, PluginName))
 		return input.FLB_OK
 	} else {
-		fmt.Printf("[%s]%s - Configuration error - %s \n", params.PluginName, patams.InstanceName, validateErr)
+		fmt.Printf("[%s]%s - Configuration error - %s \n", params.PluginName, params.InstanceName, validateErr)
 		return input.FLB_ERROR
 	}
 
