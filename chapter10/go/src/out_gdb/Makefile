@@ -1,4 +1,5 @@
 all:
+	go mod tidy
 	go build -buildmode=c-shared -o out_gdb.so
 
 clean:
