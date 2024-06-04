@@ -21,7 +21,7 @@ func createInsertTestData() []string {
 
 func main() {
 	params := SqlParams{}
-	params.Host = "192.168.1.135"
+	params.Host = "127.0.0.1"
 	params.Port = "5455"
 	params.User = "postgresUser"
 	params.Password = "postgresPW"
