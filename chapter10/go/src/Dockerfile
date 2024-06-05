@@ -1,9 +1,10 @@
-FROM golang:1.21 as gobuilder
+FROM golang:1.21-bullseye as gobuilder
 
 WORKDIR /root
 
 ENV GOOS=linux\
-    GOARCH=amd64
+    GOARCH=amd64\
+    CGO_ENABLED=1
 
 COPY / /root/
 COPY /common/* /root/out/
@@ -13,8 +14,13 @@ COPY /out_gdb/* /root/out
 COPY /in_gdb/* /root/in
 
 RUN go mod edit -replace github.com/fluent/fluent-bit-go=github.com/fluent/fluent-bit-go@master
-RUN go mod download & make -C out all
-RUN go mod download & make -C in all
+# RUN go mod download & make -C out all
+# RUN go mod download & make -C in all
+
+RUN go mod tidy
+RUN go build -C out -buildmode=c-shared  -a -gcflags=all="-C -l -B" -ldflags="-w -s" -trimpath  -tags netgo,osusergo -o /root/out/out_gdb.so
+RUN go build -C in -buildmode=c-shared  -a -gcflags=all="-C -l -B" -ldflags="-w -s" -trimpath  -tags netgo,osusergo -o /root/in/in_gdb.so
+
 
 FROM fluent/fluent-bit:3.0.6-debug
 
