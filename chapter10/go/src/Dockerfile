@@ -1,4 +1,4 @@
-FROM golang:1.21-bullseye as gobuilder
+FROM golang:1.21-bullseye AS gobuilder
 
 WORKDIR /root
 
