@@ -1,4 +1,4 @@
-FROM golang:1.14 as gobuilder
+FROM golang:1.21 as gobuilder
 
 WORKDIR /root
 
@@ -16,7 +16,7 @@ RUN go mod edit -replace github.com/fluent/fluent-bit-go=github.com/fluent/fluen
 RUN go mod download & make -C out all
 RUN go mod download & make -C in all
 
-FROM fluent/fluent-bit:2.2
+FROM fluent/fluent-bit:3.0.6-debug
 
 COPY --from=gobuilder /root/out/out_gdb.so /fluent-bit/bin/
 COPY --from=gobuilder /root/in/in_gdb.so /fluent-bit/bin/
@@ -25,4 +25,6 @@ COPY --from=gobuilder /root/plugins.conf /fluent-bit/etc/
 
 EXPOSE 2020
 
+#CMD ["ldd", "--version"]
+#CMD ["ldd", "/fluent-bit/bin/out_gdb.so"]
 CMD ["/fluent-bit/bin/fluent-bit", "--config", "/fluent-bit/etc/fluent-bit.conf"]
