@@ -1,0 +1,25 @@
+service:
+  flush_interval: 1
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 9881
+      tag: http-in
+
+  outputs:
+    - name: http
+      match: "*"
+      http_user: test
+      http_passwd: test
+      port: 8080
+      host: 192.168.1.135
+      uri: /simple
+      format: json
+      header: fluentbit http
+      json_date_format: iso8601
+
+    - name: stdout
+      match: "*"
