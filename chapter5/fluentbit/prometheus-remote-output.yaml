@@ -27,7 +27,7 @@ pipeline:
     # configuration of Prometheus we've provided
     - name: prometheus_remote_write
       match: "*"
-      host: 192.168.1.135
+      host: 127.0.0.1
       uri: /api/v1/write
       port: 9090
       tls: off
