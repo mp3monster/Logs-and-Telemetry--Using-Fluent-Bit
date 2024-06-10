@@ -1,14 +1,15 @@
 env:
-  flush_interval: 1
+  flush_interval: 2
 
 service:
   flush: ${flush_interval}
   log_level: info
+  #logLevel: info
 
 pipeline:
   inputs:
     - name: dummy
-      Dummy: '{ "hello": "my world" }'
+      dummy: '{ "hello": "my world" }'
       tag: dummy1
 
   outputs:
