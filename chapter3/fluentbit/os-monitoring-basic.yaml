@@ -24,6 +24,10 @@ pipeline:
       interval_sec: 5
       tag: book_vm_network
 
+  #
+  # Warning - upto Fluent Bit 3.0.6 - these input plugins are unavailable in a standard MacOS build
+  #
+
   outputs:
     - name: stdout
       match: "*"
