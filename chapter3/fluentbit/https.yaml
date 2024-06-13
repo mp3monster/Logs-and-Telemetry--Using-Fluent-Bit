@@ -10,8 +10,10 @@ pipeline:
       successful_response_code: 200
       success_header: x-fluent-svc fluent-bit
       tls: on
-      tls.crt_path: /etc/pki/tls/certs/fb-book
-      tls.ca_file: /etc/pki/tls/certs/fb-book
+      tls.ca_path: /etc/pki/tls/certs/
+      #tls.ca_file: /etc/pki/tls/certs/fb-book
+      tls.key_file: /etc/pki/tls/certs/fb-book.key
+      ts.verify: off
       tag: http
 
   outputs:
