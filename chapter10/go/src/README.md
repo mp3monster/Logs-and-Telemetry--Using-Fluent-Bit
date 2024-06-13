@@ -15,7 +15,7 @@ We have provided scripts:
 - clean.[bat|sh] 
 These simplify the process with build incorporating the docker commands. Clean will remove the created container and release all the resources used. This is handy - if you have tinkered with the current image and want to be sure of a clean build or release resources from failed builds this clean script will tidy up.
 
-## Use Cases
+### Use Cases
 
 - slow queries and other DB metrics being managed as tables in the schema. Many databases will log details like slow queries within special tables in the database. Knowing this information can be very helpful in tuning the DB performance.
 
@@ -25,7 +25,7 @@ These simplify the process with build incorporating the docker commands. Clean w
 
 
 
-# Configuration Attributes
+## Configuration Attributes
 
 | Attribute Name   | Description                                                  | Input | Output | Example value                |
 | ---------------- | ------------------------------------------------------------ | ----- | ------ | ---------------------------- |
@@ -45,12 +45,12 @@ These simplify the process with build incorporating the docker commands. Clean w
 | query_frequency  | The interval at which we will query the database to look for new records. This is an integer defining seconds | Y     | N      | 5                            |
 
 
-# Notes About the Build dependencies and the Dockerfile implications
+## Notes About the Build dependencies and the Dockerfile implications
 
-## Makefiles
+### Makefiles
 In each of the folders - (in_gdb) and (out_gdb) is a Makefile - so it is possible to run the build locally.  We originally used the Makefiles in the Docvkerfile, but have since simplified the Dockerfile so it directly calls to go build process.
 
-## Docker / Local Build dependency
+### Docker / Local Build dependency
 As the plugin development is dependent upon cgo we have an implicit dependency for GLIBC. This means without a version of GLIBC in the OS image. In addition to this, we also depend upon the Go networking to support the remote calling to the databases.
 
 This means we need to be careful of our environment to ensure we have the correct version of GLIBC (2.32 or better). This can be a challenge for some environments.  In the Docker container, we have addressed this by selecting a base image with the correct GLIBC necessary (the Go Lang bullseye image).  We have then provided the build process with additional configuration controls such as setting the CGO feature to on in the environment variables and various   (Thanks to Patrick Stephens - for helping us get these right https://github.com/patrick-stephens).
