@@ -1,0 +1,2 @@
+line:1	widget:gadget	aKey:aValue	time:[16/Jun/2024:14:55:01 +0000]
+line:2	widget:thingy	aKey:bValue	time:[16/Jun/2024:15:56:01 +0000]
