@@ -166,7 +166,7 @@ func FLBPluginInputCallback(data *unsafe.Pointer, size *C.size_t) int {
 		*data = nil
 		*size = C.size_t(length)
 		// no data - to avoid immediatelu been called again - lets take a nap
-		log.Printf("[%s] InputCallback -- no data found", PluginName)
+		log.Printf("[%s] InputCallback -- no data found\n", PluginName)
 
 		// For emitting interval adjustment.
 		time.Sleep(time.Second * time.Duration(params.QueryFrequency))
@@ -182,7 +182,7 @@ func FLBPluginInputCallback(data *unsafe.Pointer, size *C.size_t) int {
 func FLBPluginInputCleanupCallback(data unsafe.Pointer) int {
 	// err := releaseResources(data)    #A
 	// if err != nil {
-	//  log.printf("%s had an error during cleanup, error is %s", Plugin_Name, err)
+	//  log.Printf("%s had an error during cleanup, error is %s\n", Plugin_Name, err)
 	//  return input.FLB_ERROR   #B
 	// }
 
