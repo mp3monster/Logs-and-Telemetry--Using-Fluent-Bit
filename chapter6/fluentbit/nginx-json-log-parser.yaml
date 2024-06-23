@@ -1,5 +1,5 @@
 service:
-  flush_interval: 1
+  flush: 1
   parsers_file:
     - ./fluentbit/json-parser.conf
     - ./fluentbit/parsers2.conf
