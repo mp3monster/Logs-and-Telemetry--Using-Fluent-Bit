@@ -19,4 +19,4 @@ CREATE TABLE plugindest
     a_decimal decimal(20,10),
     primkey int NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (primkey)
-)
+);

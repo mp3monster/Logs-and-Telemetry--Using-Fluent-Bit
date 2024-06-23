@@ -6,7 +6,7 @@ CREATE TABLE pluginsrc
     a_dtg timestamp without time zone,
     a_decimal numeric,
     PRIMARY KEY (a_key)
-)
+);
 
 ALTER TABLE IF EXISTS pluginsrc
     OWNER to "postgresUser";
