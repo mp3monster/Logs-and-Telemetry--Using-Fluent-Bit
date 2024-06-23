@@ -1,4 +1,4 @@
-service:
+  service:
   flush_interval: 1
   parsers_file: "${FLUENTBIT_HOME}/conf/parsers.conf"
 
@@ -26,10 +26,12 @@ pipeline:
       uuid_key: myUUID
 
     - name: expect
+      match: nginx-feed      
       key_exists: blah
       action: warn
 
     - name: expect
+      match: nginx-feed            
       key_exists: hostname
       key_val_eq: response 404
       # to see
