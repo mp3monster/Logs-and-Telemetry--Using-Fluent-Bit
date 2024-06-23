@@ -12,7 +12,8 @@ pipeline:
   inputs:
     - name: in_gdb
       tag: db1
-      db_host: 192.168.1.135
+      db_host: 127.0.0.1
+      # you may need to reconfigure this host address to point to your DB server
       db_port: 3306
       db_user: demo
       db_password: demo
