@@ -1,0 +1,14 @@
+service:
+  flush: 1
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: dummy
+      tag: dummy
+      dummy: '{ "name": "blah", "message": "a dummy message" }'
+
+  outputs:
+    - name: stdout
+      match: "*"
+      workers: 4
