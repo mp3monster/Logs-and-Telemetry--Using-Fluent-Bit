@@ -38,8 +38,8 @@ pipeline:
               function modify_out(tag, timestamp, record)
                   new_record = record
                   local search = record["ping"]
-                 local start = string.find(search, " ms")
-                new_record["ping"] = string.sub(search, 0, start + 2) 
+                  local start = string.find(search, " ms")
+                  new_record["ping"] = string.sub(search, 0, start + 2) 
                   new_record["output"] = "new data"
                   return 1, timestamp, new_record
                 end
