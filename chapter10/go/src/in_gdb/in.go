@@ -180,6 +180,12 @@ func FLBPluginInputCallback(data *unsafe.Pointer, size *C.size_t) int {
 //
 //export FLBPluginInputCleanupCallback
 func FLBPluginInputCleanupCallback(data unsafe.Pointer) int {
+	// err := releaseResources(data)    #A
+	// if err != nil {
+	//  log.printf("%s had an error during cleanup, error is %s", Plugin_Name, err)
+	//  return input.FLB_ERROR   #B
+	// }
+
 	return input.FLB_OK
 }
 
