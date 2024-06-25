@@ -6,17 +6,32 @@ A quick summary of the book's chapters:
 1. Introduction to Fluent Bit
 2. From Zero to Hello World
 3. Capturing Inputs
-4. Inputs from Containers and Kubernetes
-5. Outputting Events
-6. Parsing
-7. Filtering
-8. Stream Processors
-9. Options for Extending Fluent Bit
+4. Getting inputs from Containers and Kubernetes
+5. Outputting events
+6. Parsing to extract more meaning
+7. Filtering and transforming events
+8. Stream Processors for time series calculations and filtering
+9. Building processors and Fluent Bit extension options
 10. Building Plugins
+11. Putting Fluent Bit into action - an enterprise use case
 
 There are additional read-me documents incorporated into the different folders providing domain or chapter specific information.
 
 ![](https://mp3muncher.files.wordpress.com/2023/11/front-cover-meap-sponsored.png?w=529)
+
+### Demo Configurations
+
+The chapters container demo configurations to illustrate different aspects of Fluent Bit.  This includes for some chapters scripts which wrap utilities / tools in a container. 
+
+##### Cross Platform Constraints
+
+It is important to note that **a couple of demos CAN'T run on  (Mac and Windows)** as not all plugins support all platforms. We have focussed on all the demos working for Linux as this is the typical platform for containerized/Kubernetes solutions. The root of the issue is that there are a few plugins that have not been built for macOS (particularly for Apple silicon), and for Windows some of the OS level services do not have a direct equivalent.
+
+We've noted the constraints in the text of the book, and the book also has a table showing which plugins are supported by which platforms.
+
+##### Classic & YAML Configurations
+
+Fluent Bit is slowly pushing towards YAML as the configuration standard, although with a couple of exceptions the  classic and YAML configuration formats work for all plugins. As a result we have provided YAML versions of the configuration files (although during development we've largely worked with the classic format first).
 
 #### Extras
 
