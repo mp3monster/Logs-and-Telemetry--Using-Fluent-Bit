@@ -52,7 +52,16 @@ It is being written as a partner title to [Logging In Action](https://www.mannin
 
 ### Log Simulator
 
-The book uses several third-party tools, all of which are referenced in the Appendix. One tool that can be helpful with developing and testing Fluent Bit configurations (currently just logs) is the Log Simulator. All the resources for this can be found in the [Log Generator GitHub](https://github.com/mp3monster/LogGenerator) repository.
+The book uses several third-party tools, all referenced in Appendix A. The Log Simulator can be a very helpful tool for developing and testing Fluent Bit configurations (although it is currently limited to just logs). All the resources can be found in the [Log Generator GitHub](https://github.com/mp3monster/LogGenerator) repository.
+
+The docker scripts we've provided to run the Log Simulator (are in the folder `SimulatorConfig` in the relevant chapter folders). These scripts exist to just simplify the Docker command - primarily mapping the volumes and environment variable configuration settings for a specific scenario.
+
+The command does include the parameters `-ti --init` .  This means that the Docker container will terminate with the use of `ctrl-c`.  These parameters do the following:
+
+- `-ti` tell Docker to use a pseudo tty (terminal input) and to run interactively. As a result, you will see everything the Log Simulator sends to the console.
+- `--init` command modifies the way the process is started within the container so that the 
+
+The use of this `-ti --init` is nicely explained [here](https://www.baeldung.com/ops/docker-init-parameter) and you can read more about how `--init` works [here](https://github.com/krallin/tini).
 
 
 
