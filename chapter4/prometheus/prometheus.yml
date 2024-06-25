@@ -1,0 +1,19 @@
+global:
+  scrape_timeout: 10s
+
+scrape_configs:
+  # Prometheus itself
+  # This uses the static method to get metrics endpoints
+  - job_name: "prometheus"
+    honor_labels: true
+    static_configs:
+      - targets:
+          - 127.0.0.1:9090 #<my-host-address>
+          # Depending upon your network configuration - you may need to change the IP to be the IP of the machine hosting Fluent Bit
+    scrape_interval: 1m
+  - job_name: fluent-bit
+    honor_labels: true
+    static_configs:
+      - targets:
+          - 127.0.0.1:9885 #<my-host-address>
+          # Depending upon your network configuration - you may need to change the IP to be the IP of the machine hosting Fluent Bit
