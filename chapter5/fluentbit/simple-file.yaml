@@ -5,9 +5,9 @@ service:
 pipeline:
   inputs:
     - name: http
-  tag: http-in
-  listen: 0.0.0.0
-  port: 9881
+      tag: http-in
+      listen: 0.0.0.0
+      port: 9881
 
   outputs:
     - name: stdout
