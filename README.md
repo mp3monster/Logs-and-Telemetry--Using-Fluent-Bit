@@ -17,7 +17,7 @@ A quick summary of the book's chapters:
 
 Additional read-me documents are incorporated into the different folders to provide domain- or chapter-specific information.
 
-![](https://mp3muncher.files.wordpress.com/2023/11/front-cover-meap-sponsored.png?w=529)
+![](https://blog.mp3monster.org/wp-content/uploads/2024/07/wilkins-hi.jpg?w=529)
 
 ### Demo Configurations
 
