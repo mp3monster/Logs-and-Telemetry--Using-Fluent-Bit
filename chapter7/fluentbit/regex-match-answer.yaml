@@ -1,0 +1,29 @@
+service:
+  flush: 1
+
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"message":"an ERROR message using a numeric code"}'
+      tag: myTag.5
+
+    - name: dummy
+      dummy: '{"message":"an ERROR message"}'
+      tag: myTag.err
+
+    - name: dummy
+      dummy: '{"message":"an warning message"}'
+      tag: myTag.warning
+
+    - name: dummy
+      dummy: '{"message":"a debug message"}'
+      tag: myTag.debug
+
+  outputs:
+    - name: stdout
+      match_regex: "myTag.(error|warn|1|2)"
+      format: json
+
+    #- name: stdout
+    #  match_regex: "myTag.(err|warning|debug|5)"
+    #  format: json
