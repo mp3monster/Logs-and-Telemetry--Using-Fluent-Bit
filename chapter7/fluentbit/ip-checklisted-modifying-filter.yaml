@@ -1,37 +1,38 @@
 service:
+  parsers_file: ${FLUENTBIT_HOME}/conf/parsers.conf
   flush: 1
-  parsers_file: "${FLUENTBIT_HOME}/conf/parsers.conf"
 
 pipeline:
   inputs:
-    - name: tail
-      tag: nginx-feed
+    - name:  tail
       path: ./nginx.json.log
-      read_from_head: true
       parser: json
+      read_from_head: true
+      tag: nginx-feed
 
   filters:
-    - name: checklist
-      match: nginx-feed
-      file: ./fluentbit/ip-checklist.data
-      lookup_key: remote_ip
+    - name:  checklist
       ignore_case: false
       mode: partial
-      record: known_origin yes
+      file: ./fluentbit/ip-checklist.data
       print_query_time: false
-
-    - name: record_modifier
+      record: known_origin yes
       match: nginx-feed
-      record: hostname ${HOSTNAME}
+      lookup_key: remote_ip
+
+    - name:  record_modifier
       uuid_key: myUUID
-
-    - name: modify
+      record: hostname ${HOSTNAME}
       match: nginx-feed
-      condition key_exists: known_origin
-      remove: agent referrer request
+
+    - name:  modify
+      condition: key_exists known_origin
+      set: identifiedValue matched
       rename: remote_user user
-      set: tag matched
+      match: nginx-feed
+      remove: agent referrer request
 
   outputs:
-    - name: stdout
+    - name:  stdout
       match: "*"
+
