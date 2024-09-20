@@ -8,7 +8,7 @@ pipeline:
     - name: dummy
       tag: complexMsg
       samples: 20
-      dummy: '{"myData":{"innerNo":"1", "innerText1" : "blah", "innerText2" : "more blah"}, "outterNo": "10", "outterTextA" : "widget", "outterTextB" : "gadget"}'
+      dummy: '{"myData":{"innerNo":"1", "innerText1" : "blah", "innerText2" : "more blah"}, "outerNo": "10", "outerTextA" : "widget", "outerTextB" : "gadget"}'
 
     - name: dummy
       tag: simpleMsg
