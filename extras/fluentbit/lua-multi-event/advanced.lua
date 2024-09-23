@@ -22,11 +22,21 @@ function copy(obj)
 end
 
 function cb_advanced(tag, timestamp, record)
+  local deepCopy = true
+  -- flag to control whether or not to perform a deep copy
   local code = 1
   print("Lua script - ", tag, "  ", timestamp, " record is a", type(record))
   -- printDetails(record, "")
-  record1 = copy(record)
-  record2 = copy(record)
+
+  record1 = record
+  record2 = record
+  if (deepCopy) then
+    print("applying deep copy")
+    record1 = copy(record)
+    record2 = copy(record)
+  end
+
+  -- modify the records slightly so we can easily distinguish them
   record2["BLAHH"] = "piiiinnnnnnnggggggggg"
   record1["remoteuser"] = "another user"
   newRecord = { record1, record2 }
