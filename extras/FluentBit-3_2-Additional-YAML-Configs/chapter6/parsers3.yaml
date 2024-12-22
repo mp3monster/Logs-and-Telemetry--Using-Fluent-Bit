@@ -1,0 +1,16 @@
+parsers:
+    - name: noDecoder
+      format: regex
+      regex: "(?<NoDecoder>(.*))"
+
+    - name: myDecodingUnstructured
+      format: regex
+      regex: (?<unstructured>(.*))
+      decode_field: json unstructured try_next
+
+    - name: myJSONOnly
+      format: json
+    
+    - name: myJSONDecodedUTF
+      format: json
+      decode_field_as: escaped_utf8 coded-msg

@@ -1,0 +1,4 @@
+## Background
+Our book [Logs and Telemetry](https://www.manning.com/books/logs-and-telemetry?a_aid=Phil&) (also known as [Fluent Bit with Kubernetes](https://chronosphere.io/resource/fluent-bit-with-kubernetes-manning/)) went to press before Fluent Bit 3.2 was released. So it didn't have YAML examples of certain functionality as YAML configuration for some features wasn't available.  This includes Parsers (including multiline parsers) and streams. The following folders follow the directory structure and include the now available configuration.
+
+At this stage we have tested some, but not yet exercised every configuration we've converted here.  That will come with a bit more time.

@@ -1,0 +1,6 @@
+stream_processor:
+  - name: selectTaskWithTag
+    exec: "SELECT record_tag(), rand_value FROM TAG:'random-num';"
+
+  - name: selectSumTask
+    exec: "SELECT now(), sum(rand_value) FROM TAG:'random-num' WINDOW HOPPING (4 SECOND, ADVANCE BY 2 SECOND);"

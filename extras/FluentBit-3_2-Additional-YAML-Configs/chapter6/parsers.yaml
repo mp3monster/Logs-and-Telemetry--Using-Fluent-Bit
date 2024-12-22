@@ -1,0 +1,4 @@
+parsers:
+  - name: myApache
+    format: regex
+    regex: ^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$    

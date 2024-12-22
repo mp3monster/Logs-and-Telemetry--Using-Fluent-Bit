@@ -1,0 +1,27 @@
+parsers:
+  - name: myRandomParserWeWontUse
+    format: regex
+    regex: '^(?<INT>[^ ]+) (?<FLOAT>[^ ]+) (?<BOOL>[^ ]+) (?<STRING>.+)$'
+
+multiline_parsers:
+  - name: multiline_Demo
+    type: regex
+    key_content: log
+    flush_timeout: 1000
+    rules:
+    - state: start_state
+      regex: "^[{].*" 
+      next_state: cont
+    - stat: cont
+      regex: "^[-].*"
+      next_state: cont
+
+  - name: multiline_Demo2
+    type: regex
+    rules:
+    - stat: start_state
+      regex: "^[-].*"
+      next_state: cont
+    - name: cont
+      regex: "^(?!END)"  
+      next_state: cont

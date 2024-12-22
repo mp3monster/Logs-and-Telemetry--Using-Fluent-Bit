@@ -1,0 +1,9 @@
+stream_processor:
+  - name: selectTaskWithTag
+    exec: "SELECT record_tag(), rand_value FROM TAG:'random-num';"
+
+  - name: selectSumTask
+    exec: "SELECT now(), sum(rand_value) FROM TAG:'random-num';"
+
+  - name: selectWhereTask
+    exec: "SELECT unix_timestamp(), count(rand_value) FROM TAG:'random-num' where rand_value > 0;"
