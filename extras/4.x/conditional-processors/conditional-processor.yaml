@@ -1,0 +1,74 @@
+service:
+  flush: 1
+  log_level: debug
+
+  
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"request": {"method": "GET", "path": "/api/v1/resource"}}'
+      tag: request.log
+      Interval_sec: 15
+      processors:
+        logs:
+          - name: content_modifier
+            action: insert
+            key: content_modifier_processor
+            value: true
+            condition:     #A
+              op: and
+              rules:       #B
+                - field: $request['method']"
+                  op: eq
+                  value: "GET"    
+
+
+
+
+    - name: http
+      port: 9881
+      listen: 0.0.0.0
+      successful_response_code: 201
+      success_header: x-fluent-bit received
+      tag: http
+      tag_key: token
+
+      processors:
+        logs:
+          - name: lua
+            call: modify
+            code: |
+              function modify(tag, timestamp, record)
+                new_record = record
+                new_record["conditional"] = "condition-triggered"
+                return 1, timestamp, new_record
+              end
+            condition:
+              op: and
+              rules:
+                - field: "$classifier"
+                  op: eq
+                  value:  "1"
+
+          - name: content_modifier
+            action: insert
+            key: content_modifier_processor2
+            value: true
+            condition:
+              op: and
+              rules:
+                - field: "$classifier"
+                  op: eq
+                  value: "2"
+
+          - name: sql
+            query: "SELECT token, classifier FROM STREAM;"
+            condition:
+              op: and
+              rules:
+                - field: "$classifier"
+                  op: eq
+                  value: "3"
+  outputs:
+    - name: stdout
+      match: "*"
